@@ -1,0 +1,15 @@
+[
+  {
+    "name": "fibunacci",
+    "runners": [
+      {
+        "name": "javascript",
+        "component": "lib/runners/fibunacci/javascript.js"
+      },
+      {
+        "name": "webassembly",
+        "component": "lib/runners/fibunacci/webassembly.js"
+      }
+    ]
+  }
+]
