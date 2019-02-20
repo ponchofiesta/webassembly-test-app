@@ -1,0 +1,44 @@
+{
+    "tests": [
+        {
+            "name": "fibunacci",
+            "runners": [
+                {
+                    "name": "javascript",
+                    "type": "js",
+                    "component": "lib/runners/fibunacci/javascript"
+                },
+                {
+                    "name": "webassembly",
+                    "type": "wasmgo",
+                    "component": "lib/runners/fibunacci/webassemblygo"
+                },
+                {
+                    "name": "webassembly",
+                    "type": "wasmrust",
+                    "component": "lib/runners/fibunacci/webassemblyrust"
+                }
+            ]
+        },
+        {
+            "name": "aes",
+            "runners": [
+                {
+                    "name": "javascript",
+                    "type": "js",
+                    "component": "lib/runners/fibunacci/javascript"
+                },
+                {
+                    "name": "webassembly",
+                    "type": "wasmgo",
+                    "component": "lib/runners/fibunacci/webassemblygo"
+                },
+                {
+                    "name": "webassembly",
+                    "type": "wasmrust",
+                    "component": "lib/runners/fibunacci/webassemblyrust"
+                }
+            ]
+        }
+    ]
+}

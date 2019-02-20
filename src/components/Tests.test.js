@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import Tests from './Tests';
 
-it('renders without crashing', () => {
+it('Tests', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<Tests />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

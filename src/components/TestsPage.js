@@ -1,0 +1,14 @@
+import React, { Component } from 'react';
+import Tests from "./Tests";
+import {Container, Header} from "semantic-ui-react";
+
+class TestsPage extends Component {
+    render() {
+        return <Container>
+            <Header as='h1'>Tests</Header>
+            <Tests tests={this.props.tests}/>
+        </Container>
+    }
+}
+
+export default TestsPage;
