@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Runner from "./Runner";
-import {Header, Segment} from 'semantic-ui-react'
+import {Grid, Header, List, Segment} from 'semantic-ui-react'
 
 class Test extends Component {
 
     render() {
-        return <Segment>
-            <Header>{this.props.name}</Header>
-            {
-                this.props.runners.map(runner => <Runner {...runner}/>)
-            }
+        return <Segment clearing>
+
+            <Header floated='left'>{this.props.name}</Header>
+            <List floated='right' selection verticalAlign='middle'>
+                {
+                    this.props.runners.map(runner => <List.Item ><Runner {...runner}/></List.Item>)
+                }
+            </List>
         </Segment>
     }
 }

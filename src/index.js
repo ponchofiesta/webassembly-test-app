@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
 
-import App from './components/App';
+import WebassemblyTestApp from './components/WebassemblyTestApp';
 import * as serviceWorker from './serviceWorker';
 
 import 'semantic-ui-css/semantic.min.css'
 import './index.css';
 
 ReactDOM.render(
-    <HashRouter>
-        <App />
-    </HashRouter>
+    <WebassemblyTestApp />
     , document.getElementById('root')
 );
 

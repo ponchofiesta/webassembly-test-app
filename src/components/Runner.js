@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import {Button, Divider, Grid, Header, Icon, Search, Segment} from "semantic-ui-react";
+import {Button, Divider, Grid, Header, Icon, Label, List, Search, Segment} from "semantic-ui-react";
 
 class Runner extends Component {
     render() {
-        return <Button>Run {this.props.name}</Button>
+        return <div>
+            <Icon name='play circle' />
+            <List.Content>
+                <List.Header>{this.props.name}</List.Header>
+            </List.Content>
+        </div>
     }
 }
 

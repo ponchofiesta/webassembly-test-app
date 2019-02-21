@@ -2,6 +2,7 @@
     "tests": [
         {
             "name": "fibunacci",
+            "description": "Some number algo",
             "runners": [
                 {
                     "name": "javascript",
@@ -22,6 +23,7 @@
         },
         {
             "name": "aes",
+            "description": "sym encryption",
             "runners": [
                 {
                     "name": "javascript",
