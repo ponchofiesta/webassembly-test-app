@@ -5,6 +5,8 @@ import TestsPage from "./TestsPage";
 import Test from "./Test";
 import {Message} from "semantic-ui-react";
 import loadConfig from "../lib/LoadConfig";
+import * as wasm from "webassembly-tests-rust";
+
 
 class WebassemblyTestApp extends Component {
 
@@ -17,6 +19,8 @@ class WebassemblyTestApp extends Component {
         loadConfig()
             .then(config => this.setState({config}))
             .catch(error => this.setState({error: error.message}));
+
+        wasm.greet();
     }
 
     render() {
