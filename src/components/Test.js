@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Runner from "./Runner";
-import {Grid, Header, List, Segment} from 'semantic-ui-react'
+import {Header, List, Segment} from 'semantic-ui-react'
 
 class Test extends Component {
 

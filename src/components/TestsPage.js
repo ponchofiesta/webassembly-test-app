@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Tests from "./Tests";
 import {Container, Divider, Header} from "semantic-ui-react";
 
