@@ -6,7 +6,7 @@ class Tests extends Component {
     render() {
         return <div>
             {
-                this.props.tests.map(test => <Test {...test}/>)
+                this.props.tests.map(test => <Test key={test.name} {...test}/>)
             }
         </div>
     }
