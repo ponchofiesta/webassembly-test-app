@@ -13,11 +13,11 @@ const config = {
                     type: "js",
                     object: new FibonacciJS(),
                     parameters: {
-                        n: 10000
-                    },
-                    chart: <BarChart/>
+                        n: 100
+                    }
                 }
-            ]
+            ],
+            chart: BarChart
         }
     ]
 };

@@ -4,15 +4,17 @@ class ResultChart extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            chart: props.chart
-        }
+        // this.state = {
+        //     chart: props.chart
+        // }
     }
 
     render() {
-        return <div>
-            {this.state.chart ? this.state.chart : null}
-        </div>
+        if (this.props.chart) {
+            return <div>
+                <this.props.chart options={this.props.options} series={this.props.series} />
+            </div>
+        }
     }
 }
 

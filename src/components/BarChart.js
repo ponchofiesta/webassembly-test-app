@@ -17,19 +17,18 @@ class BarChart extends React.Component {
                     enabled: false
                 },
                 xaxis: {
-                    categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-                        'United States', 'China', 'Germany'
-                    ],
+                    categories: [],
                 }
             },
             series: [{
-                data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                data: []
             }],
-        }
+        };
     }
 
     render() {
-        return <Chart options={this.state.options} series={this.state.series} type="bar" width="350" height="350" />
+        let newState = {...this.props, ...this.state};
+        return <Chart options={newState.options} series={newState.series} type="bar" width="350" height="350" />
     }
 }
 export default BarChart;

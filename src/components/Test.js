@@ -5,8 +5,19 @@ import ResultChart from "./ResultChart";
 
 class Test extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            results: null
+        };
+    }
+
     run = () => {
-        this.props.runners.forEach(runner => alert("runner"));
+        let results = [];
+        this.props.runners.forEach(runner => {
+            runner.object.run(runner.parameters);
+            this.setState({results: runner.object.results()});
+        });
     };
 
     render() {
@@ -18,7 +29,7 @@ class Test extends Component {
                     this.props.runners.map(runner => <List.Item key={runner.name}><Runner {...runner}/></List.Item>)
                 }
             </List>
-            <ResultChart/>
+            <ResultChart chart={this.props.chart} options={{}} series={this.state.results}/>
         </Segment>
     }
 }
