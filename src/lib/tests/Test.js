@@ -1,9 +1,7 @@
 class Test {
 
     constructor() {
-        this.result = {
-            time: null
-        };
+        this.result = null;
         this.startTime = null;
         this.stopTime = null;
     }
@@ -18,7 +16,7 @@ class Test {
 
     stop() {
         this.stopTime = new Date();
-        this.result.time = this.stopTime - this.startTime;
+        this.result = this.stopTime - this.startTime;
     }
 
     results() {

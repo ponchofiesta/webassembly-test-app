@@ -4,13 +4,13 @@ import {HashRouter, Route, Switch} from "react-router-dom";
 import TestsPage from "./TestsPage";
 import Test from "./Test";
 import {Message} from "semantic-ui-react";
-import Wasm from "../lib/Wasm";
 import config from "../lib/Config";
 
 class WebassemblyTestApp extends Component {
 
     constructor(props) {
         super(props);
+        window.wasm = {};
         this.state = {
             loading: true,
             error: false
@@ -21,8 +21,8 @@ class WebassemblyTestApp extends Component {
         Promise.all([
             import("webassembly-tests-rust")
         ])
-            .then(wasm => {
-                Wasm["rust"] = wasm[0];
+            .then(module => {
+                window.wasm.rust = module[0];
                 this.setState({loading: false});
             })
             .catch(error => this.setState({error: error.message}));
