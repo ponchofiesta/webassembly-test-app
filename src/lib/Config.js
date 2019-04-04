@@ -1,15 +1,22 @@
 import FibonacciJS from "./tests/FibonacciJS";
-import BarChart from "../components/BarChart";
 import FibonacciRust from "./tests/FibonacciRust";
+import Chart from "react-apexcharts";
+
+const msFormatter = (value) => (value+" ms");
 
 const config = {
+    logos: {
+        js: "logos/es-ecmascript-logo.svg",
+        rust: "logos/rust-logo-blk.svg",
+        go: "logos/Go-Logo_Aqua.svg"
+    },
     tests: [
         {
-            name: "fibunacci",
+            name: "Fibunacci sequence",
             description: "Some number algo",
             runners: [
                 {
-                    name: "JS 100k",
+                    name: "Iterative 100k",
                     type: "js",
                     object: new FibonacciJS(),
                     parameters: {
@@ -17,8 +24,8 @@ const config = {
                     }
                 },
                 {
-                    name: "Rust 100k",
-                    type: "js",
+                    name: "Iterative 100k",
+                    type: "rust",
                     object: new FibonacciRust(),
                     parameters: {
                         n: 1000000000
@@ -26,18 +33,32 @@ const config = {
                 }
             ],
             chart: {
-                component: BarChart,
+                component: Chart,
                 options: {
+                    chart: {
+                        width: "100%",
+                        height: "100",
+                        type: "bar"
+                    },
                     plotOptions: {
                         bar: {
-                            horizontal: true,
+                            horizontal: true
                         }
                     },
                     dataLabels: {
-                        enabled: false
+                        enabled: true,
+                        formatter: msFormatter
                     },
                     xaxis: {
-                        categories: [],
+                        categories: []
+                    },
+                    legend: {
+                        show: false
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: msFormatter
+                        }
                     }
                 }
             }

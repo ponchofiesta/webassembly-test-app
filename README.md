@@ -40,7 +40,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+## Credits
 
-
-
-
+- ECMAscript logo: https://github.com/wingsuitist/ecmascript-logo/
+- Rust logo: https://www.rust-lang.org/
+- Go logo: https://blog.golang.org/go-brand
