@@ -15,11 +15,11 @@ class FibonacciJS extends Test {
     }
 
     run(parameters) {
-        console.debug("start fibonacci");
+        console.debug("start " + this.constructor.name);
         super.start();
         this.fibonacci(parameters.n);
         super.stop();
-        console.debug("stop fibonacci");
+        console.debug("stop " + this.constructor.name);
     }
 }
 export default FibonacciJS;

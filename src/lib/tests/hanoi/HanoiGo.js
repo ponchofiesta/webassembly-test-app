@@ -1,13 +1,13 @@
 import Test from "../Test";
 
-class FibonacciGo extends Test {
+class HanoiGo extends Test {
 
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.go.fibonacci(parameters.n);
+        window.wasm.go.hanoi(parameters.n, 1, 2, 3);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default FibonacciGo;
+export default HanoiGo;

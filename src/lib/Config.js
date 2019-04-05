@@ -2,6 +2,9 @@ import Chart from "react-apexcharts";
 import FibonacciJS from "./tests/fibonacci/FibonacciJS";
 import FibonacciRust from "./tests/fibonacci/FibonacciRust";
 import FibonacciGo from "./tests/fibonacci/FibonacciGo";
+import HanoiJS from "./tests/hanoi/HanoiJS";
+import HanoiRust from "./tests/hanoi/HanoiRust";
+import HanoiGo from "./tests/hanoi/HanoiGo";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -91,7 +94,7 @@ const config = {
             description: "Some number algo",
             runners: [
                 {
-                    name: "Iterative 100k",
+                    name: "Iterative 100m",
                     type: "js",
                     object: new FibonacciJS(),
                     parameters: {
@@ -99,7 +102,7 @@ const config = {
                     }
                 },
                 {
-                    name: "Iterative 100k",
+                    name: "Iterative 100m",
                     type: "rust",
                     object: new FibonacciRust(),
                     parameters: {
@@ -107,11 +110,46 @@ const config = {
                     }
                 },
                 {
-                    name: "Iterative 100k",
+                    name: "Iterative 100m",
                     type: "go",
                     object: new FibonacciGo(),
                     parameters: {
                         n: 100000000
+                    }
+                }
+            ],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Towers of Hanoi",
+            description: "Some number algo",
+            runners: [
+                {
+                    name: "Recursive",
+                    type: "js",
+                    object: new HanoiJS(),
+                    parameters: {
+                        n: 25
+                    }
+                },
+                {
+                    name: "Recursive",
+                    type: "rust",
+                    object: new HanoiRust(),
+                    parameters: {
+                        n: 25
+                    }
+                },
+                {
+                    name: "Recursive",
+                    type: "go",
+                    object: new HanoiGo(),
+                    parameters: {
+                        n: 25
                     }
                 }
             ],
