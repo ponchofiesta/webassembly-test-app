@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './WebassemblyTestApp.css';
 import {HashRouter, Route, Switch} from "react-router-dom";
 import TestsPage from "./TestsPage";
 import Test from "./Test";
@@ -18,11 +17,15 @@ class WebassemblyTestApp extends Component {
     }
 
     componentDidMount() {
+        const go = new window.Go();
+
         Promise.all([
-            import("webassembly-tests-rust")
+            import("webassembly-tests-rust"),
+            WebAssembly.instantiateStreaming(fetch('go/webassembly-tests-go.wasm'), go.importObject)
         ])
             .then(module => {
                 window.wasm.rust = module[0];
+                go.run(module[1].instance);
                 this.setState({loading: false});
             })
             .catch(error => this.setState({error: error.message}));

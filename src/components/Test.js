@@ -6,13 +6,9 @@ class Test extends Component {
 
     constructor(props) {
         super(props);
-        this.defaultSeries = [{
-            name: "Duration",
-            data:[]
-        }];
         this.state = {
             chart: props.chart,
-            series: this.defaultSeries,
+            series: [{data: []}],
             running: false
         };
     }
@@ -28,30 +24,39 @@ class Test extends Component {
 
     run = () => {
         let categories = [];
-        let series = this.defaultSeries;
-        this.props.runners.forEach(runner => {
-            runner.object.run(runner.parameters);
-            categories.push(runner.name);
-            series[0].data.push(runner.object.results());
+        let series = [];
+        let colors = [];
+        this.props.runners.forEach((runner, index) => {
+            colors.push(config.players[runner.type].color);
+            for (let i = 0; i < this.props.repeat; i++) {
+                runner.object.run(runner.parameters);
+                //categories.push(runner.type + ": " + runner.name);
+                if (categories.length < this.props.repeat) {
+                    categories.push(i + 1);
+                }
+                if (!series[index]) {
+                    series[index] = {
+                        //name: "Duration",
+                        name: runner.type + ": " + runner.name,
+                        data: []
+                    };
+                }
+                series[index].data.push(runner.object.results());
+            }
         });
-        return {categories, series};
+        return {categories, series, colors};
     };
 
     finishRun = result => this.setState(state => {
         console.debug("all tests finished");
         state.chart.options.xaxis.categories = result.categories;
         state.series = result.series;
+        state.chart.options.colors = result.colors;
         state.running = false;
         return state;
     });
 
     render() {
-        let renderChart = false;
-        // TODO: Add Babel plugin to support null safe operator: https://www.npmjs.com/package/babel-plugin-transform-optional-chaining
-        if (this.state.series[0]?.data?.length > 0) {
-            renderChart = true;
-        }
-
         return <Segment>
             <Dimmer inverted active={this.state.running}>
                 <Loader disabled={!this.state.running}>Running</Loader>
@@ -65,16 +70,22 @@ class Test extends Component {
             <List horizontal divided>
                 {this.props.runners.map(runner =>
                     <List.Item key={runner.name+"-"+runner.type}>
-                        <Image avatar src={config.logos[runner.type]} alt={runner.type}/>
+                        <Image avatar src={config.players[runner.type].logo} alt={runner.type}/>
                         <List.Content>
                             <List.Header>{runner.name}</List.Header>
                         </List.Content>
                     </List.Item>
                 )}
             </List>
-            {renderChart &&
-                <Header as="h3">Results</Header> &&
-                <this.state.chart.component options={this.state.chart.options} series={this.state.series} type="bar" />
+            {this.state.series[0].data.length > 0 &&
+                <Header as="h3">Results</Header>}
+            {this.state.series[0].data.length > 0 &&
+                <this.state.chart.component
+                    options={this.state.chart.options}
+                    series={this.state.series}
+                    {...this.state.chart.options.chart}
+                    height={this.state.chart.options.chart.height * this.state.series.length * this.state.series[0].data.length + 100}
+                />
             }
         </Segment>
     }

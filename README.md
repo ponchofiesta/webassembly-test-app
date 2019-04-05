@@ -18,8 +18,22 @@ With these things this project was created and tested:
   npm install npm@6.9.0 -g
   ```
 - webassembly-tests-rust
+
+  Checkout somewhere, build and run there:
   ```bash
+  cd pkg
+  npm link
+  ```
+  And run here:
+  ```bash
+  npm link webassembly-tests-rust
+  ```
   
+- webassembly-tests-go
+
+  Checkout somewhere, build and run here:
+  ```bash
+  ln -s <PATH_TO_IT>/pkg public/go
   ```
 
 ## Build
