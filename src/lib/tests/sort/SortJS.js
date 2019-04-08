@@ -1,13 +1,17 @@
 import Test from "../Test";
 
-class HanoiGo extends Test {
+class SortJS extends Test {
+
+    sort(data) {
+
+    }
 
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.go.hanoi(parameters.n, "A", "B", "C");
+        this.sort(parameters.data);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default HanoiGo;
+export default SortJS;

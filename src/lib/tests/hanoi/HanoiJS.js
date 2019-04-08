@@ -2,11 +2,18 @@ import Test from "../Test";
 
 class HanoiJS extends Test {
 
-    hanoi(n, from, to, via) {
+    constructor() {
+        super();
+        this.moves = "";
+    }
+
+    hanoi(n, from, via, to) {
         if (n > 0) {
-            this.hanoi(n - 1, from, via, to);
-            this.hanoi(n - 1, to, from, via);
+            this.hanoi(n - 1, from, to, via);
+            this.moves += from + "->" + to + "\n";
+            this.hanoi(n - 1, via, from, to);
         }
+        return this.moves;
     }
 
     run(parameters) {

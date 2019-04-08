@@ -33,7 +33,7 @@ With these things this project was created and tested:
 
   Checkout somewhere, build and run here:
   ```bash
-  ln -s <PATH_TO_IT>/pkg public/go
+  ln -s <PATH_TO_IT>/bin public/go
   ```
 
 ## Build

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Dimmer, Header, Image, List, Loader, Segment} from 'semantic-ui-react'
-import config from "../lib/Config";
 
 class Test extends Component {
 
@@ -27,9 +26,10 @@ class Test extends Component {
         let series = [];
         let colors = [];
         this.props.runners.forEach((runner, index) => {
-            colors.push(config.players[runner.type].color);
+            colors.push(window.config.players[runner.type].color);
             for (let i = 0; i < this.props.repeat; i++) {
-                runner.object.run(runner.parameters);
+                let instance = runner.factory();
+                instance.run(this.props.parameters);
                 //categories.push(runner.type + ": " + runner.name);
                 if (categories.length < this.props.repeat) {
                     categories.push(i + 1);
@@ -41,7 +41,7 @@ class Test extends Component {
                         data: []
                     };
                 }
-                series[index].data.push(runner.object.results());
+                series[index].data.push(instance.results());
             }
         });
         return {categories, series, colors};
@@ -70,7 +70,7 @@ class Test extends Component {
             <List horizontal divided>
                 {this.props.runners.map(runner =>
                     <List.Item key={runner.name+"-"+runner.type}>
-                        <Image avatar src={config.players[runner.type].logo} alt={runner.type}/>
+                        <Image avatar src={window.config.players[runner.type].logo} alt={runner.type}/>
                         <List.Content>
                             <List.Header>{runner.name}</List.Header>
                         </List.Content>
