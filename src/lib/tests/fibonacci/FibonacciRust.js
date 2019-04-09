@@ -5,7 +5,7 @@ class FibonacciRust extends Test {
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.fibonacci(parameters.n);
+        window.wasm.rust.fibonacci(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }

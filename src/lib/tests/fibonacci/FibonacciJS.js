@@ -17,7 +17,7 @@ class FibonacciJS extends Test {
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        this.fibonacci(parameters.n);
+        this.fibonacci(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }

@@ -6,6 +6,7 @@ import HanoiJS from "./tests/hanoi/HanoiJS";
 import HanoiRust from "./tests/hanoi/HanoiRust";
 import HanoiGo from "./tests/hanoi/HanoiGo";
 import SortJS from "./tests/sort/SortJS";
+import SortRust from "./tests/sort/SortRust";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -74,119 +75,115 @@ const areaChartOptions = {
     }
 };
 
-const loadConfig = async () => {
-    let dataUsers;
-    Promise.all([
-        fetch("data/users.json")
-    ]).then(results => {
-        dataUsers = results[0];
 
-        return {
-            players: {
-                js: {
-                    logo: "logos/es-ecmascript-logo.svg",
-                    color: "rgb(248,220,61)"
+const config = {
+    players: {
+        js: {
+            logo: "logos/es-ecmascript-logo.svg",
+            color: "rgb(248,220,61)"
+        },
+        rust: {
+            logo: "logos/rust-logo-blk.svg",
+            color: "black"
+        },
+        go: {
+            logo: "logos/Go-Logo_Aqua.svg",
+            color: "#2DBCAF"
+        }
+    },
+    tests: [
+        {
+            name: "Fibunacci sequence",
+            description: "Some number algo",
+            runners: [
+                {
+                    name: "Iterative 100m",
+                    type: "js",
+                    factory: () => new FibonacciJS()
                 },
-                rust: {
-                    logo: "logos/rust-logo-blk.svg",
-                    color: "black"
+                {
+                    name: "Iterative 100m",
+                    type: "rust",
+                    factory: () => new FibonacciRust()
                 },
-                go: {
-                    logo: "logos/Go-Logo_Aqua.svg",
-                    color: "#2DBCAF"
+                {
+                    name: "Iterative 100m",
+                    type: "go",
+                    factory: () => new FibonacciGo()
                 }
+            ],
+            parameters: {
+                n: 100000000
             },
-            tests: [
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Towers of Hanoi",
+            description: "Some number algo",
+            runners: [
                 {
-                    name: "Fibunacci sequence",
-                    description: "Some number algo",
-                    runners: [
-                        {
-                            name: "Iterative 100m",
-                            type: "js",
-                            factory: () => new FibonacciJS()
-                        },
-                        {
-                            name: "Iterative 100m",
-                            type: "rust",
-                            factory: () => new FibonacciRust()
-                        },
-                        {
-                            name: "Iterative 100m",
-                            type: "go",
-                            factory: () => new FibonacciGo()
-                        }
-                    ],
-                    parameters: {
-                        n: 100000000
-                    },
-                    repeat: 5,
-                    chart: {
-                        component: Chart,
-                        options: areaChartOptions
-                    }
+                    name: "Recursive 20",
+                    type: "js",
+                    factory: () => new HanoiJS()
                 },
                 {
-                    name: "Towers of Hanoi",
-                    description: "Some number algo",
-                    runners: [
-                        {
-                            name: "Recursive 20",
-                            type: "js",
-                            factory: () => new HanoiJS()
-                        },
-                        {
-                            name: "Recursive 2",
-                            type: "rust",
-                            factory: () => new HanoiRust()
-                        },
-                        {
-                            name: "Recursive 20",
-                            type: "go",
-                            factory: () => new HanoiGo()
-                        }
-                    ],
-                    parameters: {
-                        n: 2
-                    },
-                    repeat: 5,
-                    chart: {
-                        component: Chart,
-                        options: areaChartOptions
-                    }
-                },
-                {
-                    name: "Sort",
-                    description: "Sort a list of elements containing multiple fields",
-                    runners: [
-                        {
-                            name: "Sort",
-                            type: "js",
-                            factory: () => new SortJS()
-                        }/*,
-                {
-                    name: "Sort",
+                    name: "Recursive 2",
                     type: "rust",
                     factory: () => new HanoiRust()
                 },
+                {
+                    name: "Recursive 20",
+                    type: "go",
+                    factory: () => new HanoiGo()
+                }
+            ],
+            parameters: {
+                n: 2,
+                from: "A",
+                via: "B",
+                to: "C"
+            },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Sort",
+            description: "Sort a list of elements containing multiple fields",
+            runners: [
+                {
+                    name: "Sort",
+                    type: "js",
+                    factory: () => new SortJS()
+                },
+                {
+                    name: "Sort",
+                    type: "rust",
+                    factory: () => new SortRust()
+                }/*,
                 {
                     name: "Sort",
                     type: "go",
                     factory: () => new HanoiGo()
                 }*/
-                    ],
-                    parameters: {
-                        data: dataUsers
-                    },
-                    repeat: 5,
-                    chart: {
-                        component: Chart,
-                        options: areaChartOptions
-                    }
-                }
-            ]
-        };
-    })
+            ],
+            parameters: {
+                dataPath: "data/users.json",
+                dataRepeat: 500
+            },
+            repeat: 1,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        }
+    ]
 };
 
-export {loadConfig};
+export default config;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Dimmer, Header, Image, List, Loader, Segment} from 'semantic-ui-react'
+import config from "../lib/Config";
 
 class Test extends Component {
 
@@ -14,19 +15,31 @@ class Test extends Component {
 
     startRun = () => {
         this.setState({running: true});
-        setTimeout(() => {
-            let result = this.run();
+        setTimeout(async () => {
+            let result = await this.run();
             this.finishRun(result);
         }, 0);
         console.debug("all tests started");
     };
 
-    run = () => {
+    run = async () => {
         let categories = [];
         let series = [];
         let colors = [];
+        if (this.props.parameters.dataPath) {
+            let data = await fetch(this.props.parameters.dataPath);
+            try {
+                data = await data.json();
+            } catch (e) {}
+            this.props.parameters.data = data;
+        }
+        if (this.props.parameters.dataRepeat) {
+            this.props.parameters.data = Array(this.props.parameters.dataRepeat)
+                .fill(this.props.parameters.data)
+                .flat();
+        }
         this.props.runners.forEach((runner, index) => {
-            colors.push(window.config.players[runner.type].color);
+            colors.push(config.players[runner.type].color);
             for (let i = 0; i < this.props.repeat; i++) {
                 let instance = runner.factory();
                 instance.run(this.props.parameters);
@@ -70,7 +83,7 @@ class Test extends Component {
             <List horizontal divided>
                 {this.props.runners.map(runner =>
                     <List.Item key={runner.name+"-"+runner.type}>
-                        <Image avatar src={window.config.players[runner.type].logo} alt={runner.type}/>
+                        <Image avatar src={config.players[runner.type].logo} alt={runner.type}/>
                         <List.Content>
                             <List.Header>{runner.name}</List.Header>
                         </List.Content>

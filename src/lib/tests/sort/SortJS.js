@@ -3,7 +3,14 @@ import Test from "../Test";
 class SortJS extends Test {
 
     sort(data) {
-
+        return data.sort((firstEl, secondEl) => {
+            if (firstEl.name < secondEl.name) {
+                return -1;
+            } else if (firstEl.name > secondEl.name) {
+                return 1;
+            }
+            return 0;
+        });
     }
 
     run(parameters) {
@@ -12,6 +19,8 @@ class SortJS extends Test {
         this.sort(parameters.data);
         super.stop();
         console.debug("stop " + this.constructor.name);
+
+
     }
 }
 export default SortJS;

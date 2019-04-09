@@ -19,7 +19,7 @@ class HanoiJS extends Test {
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        this.hanoi(parameters.n, 1, 2, 3);
+        this.hanoi(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
