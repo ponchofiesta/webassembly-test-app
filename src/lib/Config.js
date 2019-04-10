@@ -112,9 +112,9 @@ const config = {
                     factory: () => new FibonacciGo()
                 }
             ],
-            parameters: {
-                n: 100000000
-            },
+            parameters: [
+                100000000
+            ],
             repeat: 5,
             chart: {
                 component: Chart,
@@ -131,7 +131,7 @@ const config = {
                     factory: () => new HanoiJS()
                 },
                 {
-                    name: "Recursive 2",
+                    name: "Recursive 20",
                     type: "rust",
                     factory: () => new HanoiRust()
                 },
@@ -141,12 +141,7 @@ const config = {
                     factory: () => new HanoiGo()
                 }
             ],
-            parameters: {
-                n: 2,
-                from: "A",
-                via: "B",
-                to: "C"
-            },
+            parameters: [ 20, "A", "B", "C" ],
             repeat: 5,
             chart: {
                 component: Chart,
@@ -170,12 +165,13 @@ const config = {
                 {
                     name: "Sort",
                     type: "go",
-                    factory: () => new HanoiGo()
+                    factory: () => new SortGo()
                 }*/
             ],
-            parameters: {
-                dataPath: "data/users.json",
-                dataRepeat: 500
+            parameters: [],
+            externalData: {
+                path: "data/users.json",
+                repeat: 500
             },
             repeat: 1,
             chart: {

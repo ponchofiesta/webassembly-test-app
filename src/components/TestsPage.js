@@ -8,6 +8,7 @@ class TestsPage extends Component {
             <Divider hidden />
             <Header as='h1'>Tests</Header>
             <Tests tests={this.props.tests}/>
+            <Divider hidden />
         </Container>
     }
 }

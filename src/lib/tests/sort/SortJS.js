@@ -16,7 +16,7 @@ class SortJS extends Test {
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        this.sort(parameters.data);
+        this.sort(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
 

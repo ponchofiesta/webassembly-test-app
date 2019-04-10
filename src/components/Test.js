@@ -26,20 +26,26 @@ class Test extends Component {
         let categories = [];
         let series = [];
         let colors = [];
-        if (this.props.parameters.dataPath) {
-            let data = await fetch(this.props.parameters.dataPath);
+        const hasLocalRunner = this.props.runners.some(runner => runner.type === "js");
+        let data = null;
+        if (hasLocalRunner && this.props.externalData) {
+            data = await fetch(this.props.externalData.path);
             try {
                 data = await data.json();
             } catch (e) {}
-            this.props.parameters.data = data;
         }
-        if (this.props.parameters.dataRepeat) {
-            this.props.parameters.data = Array(this.props.parameters.dataRepeat)
-                .fill(this.props.parameters.data)
+        if (hasLocalRunner && this.props.externalData && this.props.externalData.repeat > 1) {
+            data = Array(this.props.externalData.repeat)
+                .fill(data)
                 .flat();
+        }
+        if (data !== null) {
+            this.props.parameters.push(data);
         }
         this.props.runners.forEach((runner, index) => {
             colors.push(config.players[runner.type].color);
+            if (runner.type === "js") {
+            }
             for (let i = 0; i < this.props.repeat; i++) {
                 let instance = runner.factory();
                 instance.run(this.props.parameters);

@@ -5,7 +5,7 @@ class SortRust extends Test {
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.sort(parameters.dataPath);
+        window.wasm.rust.sort(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
