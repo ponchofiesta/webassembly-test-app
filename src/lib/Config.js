@@ -170,10 +170,11 @@ const config = {
             ],
             parameters: [],
             externalData: {
+                type: "sort",
                 path: "data/users.json",
                 repeat: 500
             },
-            repeat: 1,
+            repeat: 5,
             chart: {
                 component: Chart,
                 options: areaChartOptions

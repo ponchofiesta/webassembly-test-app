@@ -6,8 +6,16 @@ class Test {
         this.stopTime = null;
     }
 
-    run() {
+    prepareTestData(url) {
+        console.warn(this.constuctor.name + " not implemented.")
+    }
 
+    resetTestData(url) {
+        console.warn(this.constuctor.name + " not implemented.")
+    }
+
+    run() {
+        console.warn(this.constuctor.name + " not implemented.")
     }
 
     start() {

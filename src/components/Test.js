@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Dimmer, Header, Image, List, Loader, Segment} from 'semantic-ui-react'
+import {Button, Dimmer, Header, Image, List, Loader, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
 
 class Test extends Component {
@@ -9,15 +9,25 @@ class Test extends Component {
         this.state = {
             chart: props.chart,
             series: [{data: []}],
-            running: false
+            running: false,
+            errors: []
         };
     }
 
     startRun = () => {
-        this.setState({running: true});
+        this.setState({
+            running: true,
+            errors: []
+        });
         setTimeout(async () => {
-            let result = await this.run();
-            this.finishRun(result);
+            this.run()
+                .then(result => this.finishRun(result))
+                .catch(error => {
+                    this.setState({
+                        errors: [error.message ? error.message : error],
+                        running: false
+                    });
+                });
         }, 0);
         console.debug("all tests started");
     };
@@ -28,6 +38,8 @@ class Test extends Component {
         let colors = [];
         const hasLocalRunner = this.props.runners.some(runner => runner.type === "js");
         let data = null;
+
+        // Download external test data for JS
         if (hasLocalRunner && this.props.externalData) {
             data = await fetch(this.props.externalData.path);
             try {
@@ -42,28 +54,46 @@ class Test extends Component {
         if (data !== null) {
             this.props.parameters.push(data);
         }
-        this.props.runners.forEach((runner, index) => {
-            colors.push(config.players[runner.type].color);
-            if (runner.type === "js") {
-            }
-            for (let i = 0; i < this.props.repeat; i++) {
-                let instance = runner.factory();
-                instance.run(this.props.parameters);
-                //categories.push(runner.type + ": " + runner.name);
-                if (categories.length < this.props.repeat) {
-                    categories.push(i + 1);
-                }
-                if (!series[index]) {
-                    series[index] = {
-                        //name: "Duration",
-                        name: runner.type + ": " + runner.name,
-                        data: []
-                    };
-                }
-                series[index].data.push(instance.results());
-            }
-        });
-        return {categories, series, colors};
+
+        // Download test data for Rust and Go
+        let testDataDownloads = [];
+        if (this.props.runners.some(runner => runner.type === "rust") && this.props.externalData) {
+            testDataDownloads.push(window.wasm.rust.prepare_test_data(
+                this.props.externalData.type, this.props.externalData.path, this.props.externalData.repeat));
+        }
+        // if (this.props.runners.some(runner => runner.type === "go") && this.props.externalData) {
+        //     testDataDownloads.push(window.wasm.go.prepare_test_data(this.props.externalData.path));
+        // }
+        return Promise.all(testDataDownloads)
+            .then(() => {
+                // Run all tests
+                this.props.runners.forEach((runner, index) => {
+                    colors.push(config.players[runner.type].color);
+                    if (runner.type === "rust") {
+                        window.wasm.rust.reset_test_data(this.props.externalData.type);
+                    }
+                    if (runner.type === "go") {
+                        window.wasm.go.reset_test_data(this.props.externalData.type);
+                    }
+                    for (let i = 0; i < this.props.repeat; i++) {
+                        let instance = runner.factory();
+                        instance.run(this.props.parameters);
+                        //categories.push(runner.type + ": " + runner.name);
+                        if (categories.length < this.props.repeat) {
+                            categories.push(i + 1);
+                        }
+                        if (!series[index]) {
+                            series[index] = {
+                                //name: "Duration",
+                                name: runner.type + ": " + runner.name,
+                                data: []
+                            };
+                        }
+                        series[index].data.push(instance.results());
+                    }
+                });
+                return {categories, series, colors};
+            });
     };
 
     finishRun = result => this.setState(state => {
@@ -96,15 +126,18 @@ class Test extends Component {
                     </List.Item>
                 )}
             </List>
-            {this.state.series[0].data.length > 0 &&
-                <Header as="h3">Results</Header>}
-            {this.state.series[0].data.length > 0 &&
+            {this.state.series[0].data.length ?
+                <Header as="h3">Results</Header> : null}
+            {this.state.series[0].data.length ?
                 <this.state.chart.component
                     options={this.state.chart.options}
                     series={this.state.series}
                     {...this.state.chart.options.chart}
                     height={this.state.chart.options.chart.height * this.state.series.length * this.state.series[0].data.length + 100}
-                />
+                /> : null
+            }
+            {this.state.errors.length ?
+                <Message error header="Some tests had errors" list={this.state.errors}/> : null
             }
         </Segment>
     }
