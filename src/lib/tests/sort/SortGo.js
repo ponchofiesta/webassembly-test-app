@@ -1,13 +1,13 @@
 import Test from "../Test";
 
-class SortRust extends Test {
+class SortGo extends Test {
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.sort(...parameters);
+        window.wasm.go.sort(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default SortRust;
+export default SortGo;

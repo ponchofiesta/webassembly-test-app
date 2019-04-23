@@ -7,6 +7,7 @@ import HanoiRust from "./tests/hanoi/HanoiRust";
 import HanoiGo from "./tests/hanoi/HanoiGo";
 import SortJS from "./tests/sort/SortJS";
 import SortRust from "./tests/sort/SortRust";
+import SortGo from "./tests/sort/SortGo";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -161,18 +162,18 @@ const config = {
                     name: "Sort",
                     type: "rust",
                     factory: () => new SortRust()
-                }/*,
+                },
                 {
                     name: "Sort",
                     type: "go",
                     factory: () => new SortGo()
-                }*/
+                }
             ],
             parameters: [],
             externalData: {
                 type: "sort",
                 path: "data/users.json",
-                repeat: 500
+                repeat: 100
             },
             repeat: 5,
             chart: {

@@ -36,64 +36,63 @@ class Test extends Component {
         let categories = [];
         let series = [];
         let colors = [];
-        const hasLocalRunner = this.props.runners.some(runner => runner.type === "js");
         let data = null;
 
         // Download external test data for JS
-        if (hasLocalRunner && this.props.externalData) {
+        if (this.props.externalData) {
             data = await fetch(this.props.externalData.path);
             try {
                 data = await data.json();
             } catch (e) {}
         }
-        if (hasLocalRunner && this.props.externalData && this.props.externalData.repeat > 1) {
+        if (this.props.externalData && this.props.externalData.repeat > 1) {
             data = Array(this.props.externalData.repeat)
                 .fill(data)
                 .flat();
         }
         if (data !== null) {
-            this.props.parameters.push(data);
+            this.props.externalData.data = data;
         }
 
-        // Download test data for Rust and Go
-        let testDataDownloads = [];
-        if (this.props.runners.some(runner => runner.type === "rust") && this.props.externalData) {
-            testDataDownloads.push(window.wasm.rust.prepare_test_data(
-                this.props.externalData.type, this.props.externalData.path, this.props.externalData.repeat));
+        // Push test data to Go and Rust
+        if (this.props.externalData && this.props.externalData.type) {
+            window.wasm.rust.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
+            window.wasm.go.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
         }
-        // if (this.props.runners.some(runner => runner.type === "go") && this.props.externalData) {
-        //     testDataDownloads.push(window.wasm.go.prepare_test_data(this.props.externalData.path));
-        // }
-        return Promise.all(testDataDownloads)
-            .then(() => {
-                // Run all tests
-                this.props.runners.forEach((runner, index) => {
-                    colors.push(config.players[runner.type].color);
+
+        // Run all tests
+        this.props.runners.forEach((runner, index) => {
+            colors.push(config.players[runner.type].color);
+            for (let i = 0; i < this.props.repeat; i++) {
+                if (this.props.externalData && this.props.externalData.type) {
                     if (runner.type === "rust") {
                         window.wasm.rust.reset_test_data(this.props.externalData.type);
                     }
                     if (runner.type === "go") {
                         window.wasm.go.reset_test_data(this.props.externalData.type);
                     }
-                    for (let i = 0; i < this.props.repeat; i++) {
-                        let instance = runner.factory();
-                        instance.run(this.props.parameters);
-                        //categories.push(runner.type + ": " + runner.name);
-                        if (categories.length < this.props.repeat) {
-                            categories.push(i + 1);
-                        }
-                        if (!series[index]) {
-                            series[index] = {
-                                //name: "Duration",
-                                name: runner.type + ": " + runner.name,
-                                data: []
-                            };
-                        }
-                        series[index].data.push(instance.results());
-                    }
-                });
-                return {categories, series, colors};
-            });
+                }
+                let instance = runner.factory();
+                instance.run(this.props.parameters, this.props.externalData);
+                //categories.push(runner.type + ": " + runner.name);
+                if (categories.length < this.props.repeat) {
+                    categories.push(i + 1);
+                }
+                if (!series[index]) {
+                    series[index] = {
+                        //name: "Duration",
+                        name: runner.type + ": " + runner.name,
+                        data: []
+                    };
+                }
+                series[index].data.push(instance.results());
+            }
+        });
+
+        //window.wasm.rust.clear_test_data(this.props.externalData.type);
+        //window.wasm.go.clear_test_data(this.props.externalData.type);
+
+        return {categories, series, colors};
     };
 
     finishRun = result => this.setState(state => {

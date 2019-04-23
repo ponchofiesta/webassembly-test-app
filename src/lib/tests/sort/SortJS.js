@@ -13,14 +13,14 @@ class SortJS extends Test {
         });
     }
 
-    run(parameters) {
+    run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
+        // deep copy whole array
+        let data = JSON.parse(JSON.stringify(externalData.data));
         super.start();
-        this.sort(...parameters);
+        this.sort(data);
         super.stop();
         console.debug("stop " + this.constructor.name);
-
-
     }
 }
 export default SortJS;
