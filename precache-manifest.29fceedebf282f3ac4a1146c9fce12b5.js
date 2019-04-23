@@ -4,24 +4,24 @@ self.__precacheManifest = [
     "url": "/webassembly-test-app/static/media/icons.0ab54153.woff2"
   },
   {
-    "revision": "1eba6bd9735f14483ddc",
+    "revision": "dc873184c65eeda6ee73",
     "url": "/webassembly-test-app/static/css/main.98cbc8e8.chunk.css"
   },
   {
-    "revision": "ca0299d9e678fb65f56f",
-    "url": "/webassembly-test-app/static/js/runtime~main.ca0299d9.js"
+    "revision": "745b92c181b517c2d134",
+    "url": "/webassembly-test-app/static/js/runtime~main.745b92c1.js"
   },
   {
     "revision": "a1a749e89f578a49306ec2b055c073da",
     "url": "/webassembly-test-app/static/media/brand-icons.a1a749e8.svg"
   },
   {
-    "revision": "a1bd7959f867e7acd1a5",
-    "url": "/webassembly-test-app/static/js/2.a1bd7959.chunk.js"
+    "revision": "4dac6e4172bae7a9b19f",
+    "url": "/webassembly-test-app/static/js/2.4dac6e41.chunk.js"
   },
   {
-    "revision": "870c590b1d40ebeb05d9",
-    "url": "/webassembly-test-app/static/js/3.870c590b.chunk.js"
+    "revision": "0d4eb8e380d9ed493570",
+    "url": "/webassembly-test-app/static/js/3.0d4eb8e3.chunk.js"
   },
   {
     "revision": "962a1bf31c081691065fe333d9fa8105",
@@ -48,8 +48,8 @@ self.__precacheManifest = [
     "url": "/webassembly-test-app/static/media/outline-icons.ad97afd3.ttf"
   },
   {
-    "revision": "1eba6bd9735f14483ddc",
-    "url": "/webassembly-test-app/static/js/main.1eba6bd9.chunk.js"
+    "revision": "dc873184c65eeda6ee73",
+    "url": "/webassembly-test-app/static/js/main.dc873184.chunk.js"
   },
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
@@ -84,15 +84,15 @@ self.__precacheManifest = [
     "url": "/webassembly-test-app/static/media/outline-icons.82f60bd0.svg"
   },
   {
-    "revision": "a1bd7959f867e7acd1a5",
-    "url": "/webassembly-test-app/static/css/2.a8a1e019.chunk.css"
+    "revision": "4dac6e4172bae7a9b19f",
+    "url": "/webassembly-test-app/static/css/2.e5755340.chunk.css"
   },
   {
-    "revision": "e1437e7dfbabf57957d12f68cf772573",
+    "revision": "66bd3d64a47c16de8789b15de15d384e",
     "url": "/webassembly-test-app/index.html"
   },
   {
-    "revision": "870c590b1d40ebeb05d9",
-    "url": "/webassembly-test-app/baea7afe20e71557c739.module.wasm"
+    "revision": "0d4eb8e380d9ed493570",
+    "url": "/webassembly-test-app/c7011464e490c0246d02.module.wasm"
   }
 ];
