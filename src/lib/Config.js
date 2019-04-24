@@ -8,6 +8,9 @@ import HanoiGo from "./tests/hanoi/HanoiGo";
 import SortJS from "./tests/sort/SortJS";
 import SortRust from "./tests/sort/SortRust";
 import SortGo from "./tests/sort/SortGo";
+import SieveOfAtkinPrimeJS from "./tests/prime/SieveOfAtkinPrimeJS";
+import SieveOfAtkinPrimeRust from "./tests/prime/SieveOfAtkinPrimeRust";
+import SieveOfAtkinPrimeGo from "./tests/prime/SieveOfAtkinPrimeGo";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -175,6 +178,33 @@ const config = {
                 path: "data/users.json",
                 repeat: 100
             },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Prime numbers",
+            description: "Sieve of Atkin",
+            runners: [
+                {
+                    name: "Prime",
+                    type: "js",
+                    factory: () => new SieveOfAtkinPrimeJS()
+                },
+                {
+                    name: "Prime",
+                    type: "rust",
+                    factory: () => new SieveOfAtkinPrimeRust()
+                },
+                {
+                    name: "Prime",
+                    type: "go",
+                    factory: () => new SieveOfAtkinPrimeGo()
+                }
+            ],
+            parameters: [3000000],
             repeat: 5,
             chart: {
                 component: Chart,

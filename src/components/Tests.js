@@ -3,10 +3,16 @@ import Test from "./Test";
 
 class Tests extends Component {
 
+    constructor(props) {
+        super(props);
+        this.testRefs = [];
+    }
+
     render() {
-        return <div>
-            {this.props.tests.map(test => <Test key={test.name} {...test}/>)}
-        </div>
+        this.testRefs = this.props.tests.map(
+            test => <Test key={test.name} {...test} ref={component => this.testRefs.push(component)}/>);
+
+        return <div style={{clear: 'both'}}>{this.testRefs}</div>
     }
 }
 

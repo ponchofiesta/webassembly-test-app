@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Dimmer, Header, Image, List, Loader, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
+import runLater from "../lib/runLater";
 
 class Test extends Component {
 
@@ -14,23 +15,29 @@ class Test extends Component {
         };
     }
 
-    startRun = () => {
+    startRun = () => new Promise((resolve, reject) => {
         this.setState({
             running: true,
             errors: []
         });
-        setTimeout(async () => {
+        runLater(async () =>
             this.run()
-                .then(result => this.finishRun(result))
+                .then(result => {
+                    this.finishRun(result);
+                    resolve(result);
+                })
                 .catch(error => {
                     this.setState({
                         errors: [error.message ? error.message : error],
                         running: false
                     });
-                });
-        }, 0);
+                    reject(error);
+                })
+        );
+
+
         console.debug("all tests started");
-    };
+    });
 
     run = async () => {
         let categories = [];
@@ -126,15 +133,16 @@ class Test extends Component {
                 )}
             </List>
             {this.state.series[0].data.length ?
-                <Header as="h3">Results</Header> : null}
-            {this.state.series[0].data.length ?
-                <this.state.chart.component
+                <React.Fragment>
+                    <Header as="h3">Results</Header>
+                    <this.state.chart.component
                     options={this.state.chart.options}
                     series={this.state.series}
                     {...this.state.chart.options.chart}
                     height={this.state.chart.options.chart.height * this.state.series.length * this.state.series[0].data.length + 100}
-                /> : null
-            }
+                />
+                </React.Fragment>
+                 : null}
             {this.state.errors.length ?
                 <Message error header="Some tests had errors" list={this.state.errors}/> : null
             }
