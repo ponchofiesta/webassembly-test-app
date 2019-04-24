@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://ponchofiesta.github.io/webassembly-test-app",
   "dependencies": {
+    "aes-js": "^3.1.2",
     "apexcharts": "^3.6.4",
     "faker": "^4.1.0",
     "react": "^16.8.2",

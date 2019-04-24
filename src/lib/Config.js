@@ -11,6 +11,7 @@ import SortGo from "./tests/sort/SortGo";
 import SieveOfAtkinPrimeJS from "./tests/prime/SieveOfAtkinPrimeJS";
 import SieveOfAtkinPrimeRust from "./tests/prime/SieveOfAtkinPrimeRust";
 import SieveOfAtkinPrimeGo from "./tests/prime/SieveOfAtkinPrimeGo";
+import AesJS from "./tests/aes/AesJS";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -205,6 +206,38 @@ const config = {
                 }
             ],
             parameters: [3000000],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Encryption",
+            description: "Encryption",
+            runners: [
+                {
+                    name: "AES CTR",
+                    type: "js",
+                    factory: () => new AesJS()
+                }/*,
+                {
+                    name: "AES CTR",
+                    type: "rust",
+                    factory: () => new SieveOfAtkinPrimeRust()
+                },
+                {
+                    name: "AES CTR",
+                    type: "go",
+                    factory: () => new SieveOfAtkinPrimeGo()
+                }*/
+            ],
+            parameters: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]],
+            externalData: {
+                type: "sort",
+                path: "data/users.json",
+                repeat: 100
+            },
             repeat: 5,
             chart: {
                 component: Chart,
