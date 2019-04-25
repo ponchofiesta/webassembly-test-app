@@ -12,36 +12,41 @@ import SieveOfAtkinPrimeJS from "./tests/prime/SieveOfAtkinPrimeJS";
 import SieveOfAtkinPrimeRust from "./tests/prime/SieveOfAtkinPrimeRust";
 import SieveOfAtkinPrimeGo from "./tests/prime/SieveOfAtkinPrimeGo";
 import AesJS from "./tests/aes/AesJS";
+import AesRust from "./tests/aes/AesRust";
+import AesGo from "./tests/aes/AesGo";
+import DeflateJS from "./tests/deflate/DeflateJS";
+import DeflateRust from "./tests/deflate/DeflateRust";
+import DeflateGo from "./tests/deflate/DeflateGo";
 
 const msFormatter = (value) => (value+" ms");
 
-const barChartOptions = {
-    chart: {
-        width: "100%",
-        height: 30,
-        type: "bar"
-    },
-    plotOptions: {
-        bar: {
-            horizontal: true
-        }
-    },
-    dataLabels: {
-        enabled: true,
-        formatter: msFormatter
-    },
-    xaxis: {
-        categories: []
-    },
-    legend: {
-        show: false
-    },
-    tooltip: {
-        y: {
-            formatter: msFormatter
-        }
-    }
-};
+// const barChartOptions = {
+//     chart: {
+//         width: "100%",
+//         height: 30,
+//         type: "bar"
+//     },
+//     plotOptions: {
+//         bar: {
+//             horizontal: true
+//         }
+//     },
+//     dataLabels: {
+//         enabled: true,
+//         formatter: msFormatter
+//     },
+//     xaxis: {
+//         categories: []
+//     },
+//     legend: {
+//         show: false
+//     },
+//     tooltip: {
+//         y: {
+//             formatter: msFormatter
+//         }
+//     }
+// };
 
 const areaChartOptions = {
     chart: {
@@ -217,26 +222,61 @@ const config = {
             description: "Encryption",
             runners: [
                 {
-                    name: "AES CTR",
+                    name: "AES CBC",
                     type: "js",
                     factory: () => new AesJS()
-                }/*,
-                {
-                    name: "AES CTR",
-                    type: "rust",
-                    factory: () => new SieveOfAtkinPrimeRust()
                 },
                 {
-                    name: "AES CTR",
+                    name: "AES CBC",
+                    type: "rust",
+                    factory: () => new AesRust()
+                },
+                {
+                    name: "AES CBC",
                     type: "go",
-                    factory: () => new SieveOfAtkinPrimeGo()
-                }*/
+                    factory: () => new AesGo()
+                }
             ],
-            parameters: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]],
+            parameters: [
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+                [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+            ],
             externalData: {
-                type: "sort",
-                path: "data/users.json",
+                type: "bytes",
+                path: "data/random.txt",
                 repeat: 100
+            },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            }
+        },
+        {
+            name: "Compression Deflate",
+            description: "Deflate",
+            runners: [
+                {
+                    name: "Deflate",
+                    type: "js",
+                    factory: () => new DeflateJS()
+                },
+                {
+                    name: "Deflate",
+                    type: "rust",
+                    factory: () => new DeflateRust()
+                },
+                {
+                    name: "Deflate",
+                    type: "go",
+                    factory: () => new DeflateGo()
+                }
+            ],
+            parameters: [],
+            externalData: {
+                type: "bytes",
+                path: "data/random.txt",
+                repeat: 500
             },
             repeat: 5,
             chart: {

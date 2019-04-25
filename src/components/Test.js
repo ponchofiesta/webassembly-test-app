@@ -47,24 +47,35 @@ class Test extends Component {
 
         // Download external test data for JS
         if (this.props.externalData) {
-            data = await fetch(this.props.externalData.path);
+            let response = await fetch(this.props.externalData.path);
             try {
-                data = await data.json();
-            } catch (e) {}
+                data = await response.clone().json();
+            } catch (e) {
+                data = await response.text();
+            }
+            if (this.props.externalData && this.props.externalData.repeat > 1) {
+                if (typeof data == "object") {
+                    data = Array(this.props.externalData.repeat)
+                        .fill(data)
+                        .flat();
+                } else {
+                    data = String(data).repeat(this.props.externalData.repeat);
+                }
+            }
         }
-        if (this.props.externalData && this.props.externalData.repeat > 1) {
-            data = Array(this.props.externalData.repeat)
-                .fill(data)
-                .flat();
-        }
+
         if (data !== null) {
             this.props.externalData.data = data;
         }
 
         // Push test data to Go and Rust
         if (this.props.externalData && this.props.externalData.type) {
-            window.wasm.rust.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
-            window.wasm.go.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
+            if (this.props.runners.some(runner => runner.type === "rust")) {
+                window.wasm.rust.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
+            }
+            if (this.props.runners.some(runner => runner.type === "go")) {
+                window.wasm.go.prepare_test_data(this.props.externalData.type, this.props.externalData.data);
+            }
         }
 
         // Run all tests

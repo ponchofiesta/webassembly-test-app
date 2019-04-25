@@ -3,18 +3,22 @@ import * as aesjs from "aes-js";
 
 class AesJS extends Test {
 
-    aes(key, iv, data) {
+    aes_encrypt(key, iv, data) {
         let aesCtr = new aesjs.ModeOfOperation.cbc(key, iv);
         return aesCtr.encrypt(data);
+    }
+
+    aes_decrypt(key, iv, data) {
+        let aesCtr = new aesjs.ModeOfOperation.cbc(key, iv);
+        return aesCtr.decrypt(data);
     }
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         // deep copy whole array
-        let data = JSON.stringify(externalData.data);
-        let dataBytes = aesjs.utils.utf8.toBytes(data);
+        let dataBytes = aesjs.utils.utf8.toBytes(externalData.data);
         super.start();
-        this.aes(...parameters, dataBytes);
+        this.aes_encrypt(...parameters, dataBytes);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
