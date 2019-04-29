@@ -129,7 +129,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         },
         {
             name: "Towers of Hanoi",
@@ -156,7 +158,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         },
         {
             name: "Sort",
@@ -188,7 +192,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         },
         {
             name: "Prime numbers",
@@ -215,7 +221,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         },
         {
             name: "Encryption",
@@ -250,7 +258,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         },
         {
             name: "Compression Deflate",
@@ -282,7 +292,9 @@ const config = {
             chart: {
                 component: Chart,
                 options: areaChartOptions
-            }
+            },
+            result: [],
+            error: null
         }
     ]
 };
