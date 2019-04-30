@@ -1,4 +1,5 @@
 import config from "./Config";
+import {imageLoader} from "./imageLoader";
 
 const runBenchmark = async benchmark => {
     let categories = [];
@@ -8,11 +9,15 @@ const runBenchmark = async benchmark => {
 
     // Download external benchmark data for JS
     if (benchmark.externalData) {
-        let response = await fetch(benchmark.externalData.path);
-        try {
-            data = await response.clone().json();
-        } catch (e) {
-            data = await response.text();
+        if (benchmark.externalData.type === "image") {
+            data = await imageLoader(benchmark.externalData.path);
+        } else {
+            let response = await fetch(benchmark.externalData.path);
+            try {
+                data = await response.clone().json();
+            } catch (e) {
+                data = await response.text();
+            }
         }
         if (benchmark.externalData && benchmark.externalData.repeat > 1) {
             if (typeof data == "object") {
@@ -30,7 +35,7 @@ const runBenchmark = async benchmark => {
     }
 
     // Push benchmark data to Go and Rust
-    if (benchmark.externalData && benchmark.externalData.type) {
+    if (benchmark.externalData && ["sort", "bytes"].includes(benchmark.externalData.type)) {
         if (benchmark.runners.some(runner => runner.type === "rust")) {
             window.wasm.rust.prepare_test_data(benchmark.externalData.type, benchmark.externalData.data);
         }

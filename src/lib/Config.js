@@ -17,6 +17,8 @@ import AesGo from "./benchmarks/aes/AesGo";
 import DeflateJS from "./benchmarks/deflate/DeflateJS";
 import DeflateRust from "./benchmarks/deflate/DeflateRust";
 import DeflateGo from "./benchmarks/deflate/DeflateGo";
+import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
+import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -287,6 +289,40 @@ const config = {
                 type: "bytes",
                 path: "data/random.txt",
                 repeat: 500
+            },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
+            name: "Convolution filter",
+            description: "convolution filter",
+            runners: [
+                /*{
+                    name: "convolve",
+                    type: "js",
+                    factory: () => new ConvolveJS()
+                },*/
+                {
+                    name: "convolve",
+                    type: "rust",
+                    factory: () => new ConvolveRust()
+                }/*,
+                {
+                    name: "convolve",
+                    type: "go",
+                    factory: () => new DeflateGo()
+                }*/
+            ],
+            parameters: [],
+            externalData: {
+                type: "image",
+                path: "data/photo.jpg",
+                repeat: 1
             },
             repeat: 5,
             chart: {
