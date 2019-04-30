@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class AesGo extends Test {
+class HanoiGo extends Benchmark {
 
-    run(parameters, externalData) {
+    run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.go.aes();
+        window.wasm.go.hanoi(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default AesGo;
+export default HanoiGo;

@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class HanoiJS extends Test {
+class HanoiJS extends Benchmark {
 
     constructor() {
         super();

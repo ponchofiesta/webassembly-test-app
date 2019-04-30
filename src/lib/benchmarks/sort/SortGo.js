@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class AesRust extends Test {
+class SortGo extends Benchmark {
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.aes();
+        window.wasm.go.sort(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default AesRust;
+export default SortGo;

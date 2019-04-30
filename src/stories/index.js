@@ -3,13 +3,12 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import 'semantic-ui-css/semantic.min.css'
-import Tests from "../components/Tests";
-import Runner from "../components/Runner";
-import Test from "../components/Test";
-import TestsPage from "../components/TestsPage";
+import Benchmarks from "../components/Benchmarks";
+import Benchmark from "../components/Benchmark";
+import BenchmarksPage from "../components/BenchmarksPage";
 
 const config = {
-    "tests": [
+    "benchmarks": [
         {
             "name": "fibunacci",
             "runners": [
@@ -54,14 +53,14 @@ const config = {
 };
 
 storiesOf('Runner', module)
-    .add('default', () => <Runner {...config.tests[0].runners[0]}/>);
+    .add('default', () => <Runner {...config.benchmarks[0].runners[0]}/>);
 
-storiesOf('Test', module)
-    .add('default', () => <Test {...config.tests[0]}/>);
+storiesOf('Benchmark', module)
+    .add('default', () => <Benchmark {...config.benchmarks[0]}/>);
 
-storiesOf('Tests', module)
-    .add('default', () => <Tests tests={config.tests}/>);
+storiesOf('Benchmarks', module)
+    .add('default', () => <Benchmarks tests={config.benchmarks}/>);
 
-storiesOf('TestsPage', module)
-    .add('default', () => <TestsPage tests={config.tests}/>);
+storiesOf('BenchmarksPage', module)
+    .add('default', () => <BenchmarksPage tests={config.benchmarks}/>);
 

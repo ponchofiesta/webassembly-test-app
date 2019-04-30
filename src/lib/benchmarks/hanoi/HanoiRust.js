@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class FibonacciGo extends Test {
+class HanoiRust extends Benchmark {
 
     run(parameters) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.go.fibonacci(...parameters);
+        window.wasm.rust.hanoi(...parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default FibonacciGo;
+export default HanoiRust;

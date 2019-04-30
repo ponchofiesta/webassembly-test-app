@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class HanoiRust extends Test {
+class AesRust extends Benchmark {
 
-    run(parameters) {
+    run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.hanoi(...parameters);
+        window.wasm.rust.aes();
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default HanoiRust;
+export default AesRust;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {HashRouter, Route, Switch} from "react-router-dom";
-import TestsPage from "./TestsPage";
-import Test from "./Test";
+import BenchmarksPage from "./BenchmarksPage";
+import Benchmark from "./Benchmark";
 import {Message} from "semantic-ui-react";
 import config from "../lib/Config";
 
@@ -20,8 +20,8 @@ class WebassemblyTestApp extends Component {
         const go = new window.Go();
 
         Promise.all([
-            import("webassembly-tests-rust"),
-            WebAssembly.instantiateStreaming(fetch('go/webassembly-tests-go.wasm'), go.importObject)
+            import("webassembly-benchmarks-rust"),
+            WebAssembly.instantiateStreaming(fetch('go/webassembly-benchmarks-go.wasm'), go.importObject)
         ])
             .then(module => {
                 window.wasm.rust = module[0];
@@ -33,13 +33,13 @@ class WebassemblyTestApp extends Component {
 
     render() {
         if (this.state.error) {
-            return <Message error>Could not load configuration: {this.state.error}</Message>
+            return <Message error>Could not start application: {this.state.error}</Message>
         } else if (!this.state.loading) {
             return <main>
                 <HashRouter>
                     <Switch>
-                        <Route path='/' render={() => <TestsPage tests={config.tests}/>}/>
-                        <Route path='/test/:id' component={Test}/>
+                        <Route path='/' render={() => <BenchmarksPage benchmarks={config.benchmarks}/>}/>
+                        <Route path='/test/:id' component={Benchmark}/>
                     </Switch>
                 </HashRouter>
             </main>

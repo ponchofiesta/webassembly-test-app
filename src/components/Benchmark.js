@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Dimmer, Header, Image, List, Loader, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
-import runLater from "../lib/runLater";
 
-class Test extends Component {
+class Benchmark extends Component {
 
     run = () => {
         if (this.props.onRun) {
@@ -12,7 +11,7 @@ class Test extends Component {
     };
 
     render() {
-        return <Segment>
+        return <Segment disabled={this.props.someRunning}>
             <Dimmer inverted active={this.props.running}>
                 <Loader disabled={!this.props.running}>Running</Loader>
             </Dimmer>
@@ -44,10 +43,10 @@ class Test extends Component {
                 </React.Fragment>
                  : null}
             {this.props.error ?
-                <Message error header="Some tests had errors" content={this.props.error}/> : null
+                <Message error header="Some benchmarks had errors" content={this.props.error}/> : null
             }
         </Segment>
     }
 }
 
-export default Test;
+export default Benchmark;

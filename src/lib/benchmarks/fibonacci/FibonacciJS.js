@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class FibonacciJS extends Test {
+class FibonacciJS extends Benchmark {
 
     fibonacci(n) {
         let a = 0

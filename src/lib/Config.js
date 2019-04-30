@@ -1,22 +1,22 @@
 import Chart from "react-apexcharts";
-import FibonacciJS from "./tests/fibonacci/FibonacciJS";
-import FibonacciRust from "./tests/fibonacci/FibonacciRust";
-import FibonacciGo from "./tests/fibonacci/FibonacciGo";
-import HanoiJS from "./tests/hanoi/HanoiJS";
-import HanoiRust from "./tests/hanoi/HanoiRust";
-import HanoiGo from "./tests/hanoi/HanoiGo";
-import SortJS from "./tests/sort/SortJS";
-import SortRust from "./tests/sort/SortRust";
-import SortGo from "./tests/sort/SortGo";
-import SieveOfAtkinPrimeJS from "./tests/prime/SieveOfAtkinPrimeJS";
-import SieveOfAtkinPrimeRust from "./tests/prime/SieveOfAtkinPrimeRust";
-import SieveOfAtkinPrimeGo from "./tests/prime/SieveOfAtkinPrimeGo";
-import AesJS from "./tests/aes/AesJS";
-import AesRust from "./tests/aes/AesRust";
-import AesGo from "./tests/aes/AesGo";
-import DeflateJS from "./tests/deflate/DeflateJS";
-import DeflateRust from "./tests/deflate/DeflateRust";
-import DeflateGo from "./tests/deflate/DeflateGo";
+import FibonacciJS from "./benchmarks/fibonacci/FibonacciJS";
+import FibonacciRust from "./benchmarks/fibonacci/FibonacciRust";
+import FibonacciGo from "./benchmarks/fibonacci/FibonacciGo";
+import HanoiJS from "./benchmarks/hanoi/HanoiJS";
+import HanoiRust from "./benchmarks/hanoi/HanoiRust";
+import HanoiGo from "./benchmarks/hanoi/HanoiGo";
+import SortJS from "./benchmarks/sort/SortJS";
+import SortRust from "./benchmarks/sort/SortRust";
+import SortGo from "./benchmarks/sort/SortGo";
+import SieveOfAtkinPrimeJS from "./benchmarks/prime/SieveOfAtkinPrimeJS";
+import SieveOfAtkinPrimeRust from "./benchmarks/prime/SieveOfAtkinPrimeRust";
+import SieveOfAtkinPrimeGo from "./benchmarks/prime/SieveOfAtkinPrimeGo";
+import AesJS from "./benchmarks/aes/AesJS";
+import AesRust from "./benchmarks/aes/AesRust";
+import AesGo from "./benchmarks/aes/AesGo";
+import DeflateJS from "./benchmarks/deflate/DeflateJS";
+import DeflateRust from "./benchmarks/deflate/DeflateRust";
+import DeflateGo from "./benchmarks/deflate/DeflateGo";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -75,7 +75,7 @@ const areaChartOptions = {
         show: true
     },
     title: {
-        text: 'Time taken to run the tests',
+        text: 'Time taken to run the benchmarks',
         align: 'left'
     },
     tooltip: {
@@ -101,7 +101,7 @@ const config = {
             color: "#2DBCAF"
         }
     },
-    tests: [
+    benchmarks: [
         {
             name: "Fibunacci sequence",
             description: "Some number algo",

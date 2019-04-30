@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class SortJS extends Test {
+class SortJS extends Benchmark {
 
     sort(data) {
         return data.sort((firstEl, secondEl) => {

@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class FibonacciRust extends Test {
+class FibonacciRust extends Benchmark {
 
     run(parameters) {
         console.debug("start " + this.constructor.name);

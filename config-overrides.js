@@ -7,7 +7,7 @@ const path = require('path');
 module.exports = function override(config, env) {
 
     /**
-     * Add WASM support
+     * Add WASM support for Rust
      */
 
     // Make file-loader ignore WASM files

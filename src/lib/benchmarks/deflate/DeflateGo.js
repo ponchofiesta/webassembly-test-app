@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class DeflateRust extends Test {
+class DeflateGo extends Benchmark {
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.rust.deflate();
+        window.wasm.go.deflate();
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default DeflateRust;
+export default DeflateGo;

@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class SieveOfAtkinPrimeJS extends Test {
+class SieveOfAtkinPrimeJS extends Benchmark {
 
     prime(max) {
         let primes = [];

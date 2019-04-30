@@ -1,7 +1,7 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 import * as aesjs from "aes-js";
 
-class AesJS extends Test {
+class AesJS extends Benchmark {
 
     aes_encrypt(key, iv, data) {
         let aesCtr = new aesjs.ModeOfOperation.cbc(key, iv);

@@ -1,13 +1,13 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class SortGo extends Test {
+class AesGo extends Benchmark {
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
         super.start();
-        window.wasm.go.sort(...parameters);
+        window.wasm.go.aes();
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
 }
-export default SortGo;
+export default AesGo;

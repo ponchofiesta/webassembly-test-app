@@ -1,4 +1,4 @@
-class Test {
+class Benchmark {
 
     constructor() {
         this.result = null;
@@ -31,4 +31,4 @@ class Test {
         return this.result;
     }
 }
-export default Test;
+export default Benchmark;

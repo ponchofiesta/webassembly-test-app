@@ -1,8 +1,8 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 import pako from "pako";
 import * as aesjs from "aes-js";
 
-class DeflateJS extends Test {
+class DeflateJS extends Benchmark {
 
     deflate(data) {
         return pako.deflate(data, {raw: true});

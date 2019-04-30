@@ -1,6 +1,6 @@
-import Test from "../Test";
+import Benchmark from "../Benchmark";
 
-class SieveOfAtkinPrimeRust extends Test {
+class SieveOfAtkinPrimeRust extends Benchmark {
 
     run(parameters, externalData) {
         console.debug("start " + this.constructor.name);
