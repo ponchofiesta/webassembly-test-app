@@ -19,6 +19,7 @@ import DeflateRust from "./benchmarks/deflate/DeflateRust";
 import DeflateGo from "./benchmarks/deflate/DeflateGo";
 import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
 import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
+import ConvolveGo from "./benchmarks/convolve/ConvolveGo";
 
 const msFormatter = (value) => (value+" ms");
 
@@ -302,26 +303,26 @@ const config = {
             name: "Convolution filter",
             description: "convolution filter",
             runners: [
-                /*{
+                {
                     name: "convolve",
                     type: "js",
                     factory: () => new ConvolveJS()
-                },*/
+                },
                 {
                     name: "convolve",
                     type: "rust",
                     factory: () => new ConvolveRust()
-                }/*,
+                },
                 {
                     name: "convolve",
                     type: "go",
-                    factory: () => new DeflateGo()
-                }*/
+                    factory: () => new ConvolveGo()
+                }
             ],
             parameters: [],
             externalData: {
                 type: "image",
-                path: "data/photo.jpg",
+                path: "data/icon-64x64.png",
                 repeat: 1
             },
             repeat: 5,

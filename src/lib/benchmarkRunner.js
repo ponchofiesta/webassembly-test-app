@@ -1,48 +1,58 @@
 import config from "./Config";
 import {imageLoader} from "./imageLoader";
 
-const runBenchmark = async benchmark => {
-    let categories = [];
-    let series = [];
-    let colors = [];
+const loadExternalData = async externalData => {
+
     let data = null;
 
     // Download external benchmark data for JS
-    if (benchmark.externalData) {
-        if (benchmark.externalData.type === "image") {
-            data = await imageLoader(benchmark.externalData.path);
+    if (externalData) {
+        if (externalData.type === "image") {
+            data = await imageLoader(externalData.path);
         } else {
-            let response = await fetch(benchmark.externalData.path);
+            let response = await fetch(externalData.path);
             try {
                 data = await response.clone().json();
             } catch (e) {
                 data = await response.text();
             }
         }
-        if (benchmark.externalData && benchmark.externalData.repeat > 1) {
+        if (externalData && externalData.repeat > 1) {
             if (typeof data == "object") {
-                data = Array(benchmark.externalData.repeat)
+                data = Array(externalData.repeat)
                     .fill(data)
                     .flat();
             } else {
-                data = String(data).repeat(benchmark.externalData.repeat);
+                data = String(data).repeat(externalData.repeat);
             }
         }
     }
 
     if (data !== null) {
-        benchmark.externalData.data = data;
+        externalData.data = data;
     }
+};
+
+const prepareExternalData = (externalData, runners) => {
 
     // Push benchmark data to Go and Rust
-    if (benchmark.externalData && ["sort", "bytes"].includes(benchmark.externalData.type)) {
-        if (benchmark.runners.some(runner => runner.type === "rust")) {
-            window.wasm.rust.prepare_test_data(benchmark.externalData.type, benchmark.externalData.data);
+    if (externalData && ["sort", "bytes"].includes(externalData.type)) {
+        if (runners.some(runner => runner.type === "rust")) {
+            window.wasm.rust.prepare_test_data(externalData.type, externalData.data);
         }
-        if (benchmark.runners.some(runner => runner.type === "go")) {
-            window.wasm.go.prepare_test_data(benchmark.externalData.type, benchmark.externalData.data);
+        if (runners.some(runner => runner.type === "go")) {
+            window.wasm.go.prepare_test_data(externalData.type, externalData.data);
         }
     }
+};
+
+const runBenchmark = async benchmark => {
+    let categories = [];
+    let series = [];
+    let colors = [];
+
+    await loadExternalData(benchmark.externalData);
+    prepareExternalData(benchmark.externalData, benchmark.runners);
 
     // Run all benchmarks
     benchmark.runners.forEach((runner, index) => {
