@@ -55,7 +55,20 @@ const areaChartOptions = {
     chart: {
         width: "100%",
         height: 16,
-        type: "line"
+        type: "line",
+        animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 200,
+            animateGradually: {
+                enabled: true,
+                delay: 0
+            },
+            dynamicAnimation: {
+                enabled: true,
+                speed: 200
+            }
+        }
     },
     markers: {
         size: 7
