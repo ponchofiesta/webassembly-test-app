@@ -2,7 +2,7 @@ import Benchmark from "../Benchmark";
 
 class AesGo extends Benchmark {
 
-    run(parameters, externalData) {
+    run() {
         console.debug("start " + this.constructor.name);
         super.start();
         window.wasm.go.aes();

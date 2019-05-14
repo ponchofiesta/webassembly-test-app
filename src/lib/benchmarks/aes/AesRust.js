@@ -2,7 +2,7 @@ import Benchmark from "../Benchmark";
 
 class AesRust extends Benchmark {
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         super.start();
         window.wasm.rust.aes();

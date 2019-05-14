@@ -13,12 +13,12 @@ class AesJS extends Benchmark {
         return aesCtr.decrypt(data);
     }
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         // deep copy whole array
-        let dataBytes = aesjs.utils.utf8.toBytes(externalData.data);
+        let dataBytes = aesjs.utils.utf8.toBytes(benchmark.externalData.data);
         super.start();
-        this.aes_encrypt(...parameters, dataBytes);
+        this.aes_encrypt(...benchmark.parameters, dataBytes);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }

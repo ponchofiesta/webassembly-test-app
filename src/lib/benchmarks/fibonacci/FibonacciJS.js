@@ -14,10 +14,10 @@ class FibonacciJS extends Benchmark {
         return a;
     }
 
-    run(parameters) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         super.start();
-        this.fibonacci(...parameters);
+        this.fibonacci(...benchmark.parameters);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }

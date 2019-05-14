@@ -13,10 +13,10 @@ class SortJS extends Benchmark {
         });
     }
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         // deep copy whole array
-        let data = JSON.parse(JSON.stringify(externalData.data));
+        let data = JSON.parse(JSON.stringify(benchmark.externalData.data));
         super.start();
         this.sort(data);
         super.stop();

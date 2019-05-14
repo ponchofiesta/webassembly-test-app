@@ -343,7 +343,7 @@ const config = {
                 path: "data/icon-64x64.png",
                 repeat: 1
             },
-            repeat: 1,
+            repeat: 5,
             chart: {
                 component: Chart,
                 options: areaChartOptions

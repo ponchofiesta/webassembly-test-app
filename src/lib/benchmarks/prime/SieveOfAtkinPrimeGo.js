@@ -2,10 +2,10 @@ import Benchmark from "../Benchmark";
 
 class SieveOfAtkinPrimeGo extends Benchmark {
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         this.start();
-        window.wasm.go.prime(...parameters);
+        window.wasm.go.prime(...benchmark.parameters);
         this.stop();
         console.debug("stop " + this.constructor.name);
     }

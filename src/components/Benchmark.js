@@ -11,8 +11,12 @@ class Benchmark extends Component {
     };
 
     fitToParent(element) {
+        const ratio = element.parentElement.clientWidth / element.width;
+        if (ratio > 1) {
+            return;
+        }
         element.style.width = element.parentElement.clientWidth + "px";
-        element.style.height = (element.parentElement.clientWidth / element.width * element.height) + "px";
+        element.style.height = (ratio * element.height) + "px";
     }
 
     render() {

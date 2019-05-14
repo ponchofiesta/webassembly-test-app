@@ -59,10 +59,10 @@ class SieveOfAtkinPrimeJS extends Benchmark {
     }
 
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         this.start();
-        this.prime(...parameters);
+        this.prime(...benchmark.parameters);
         this.stop();
         console.debug("stop " + this.constructor.name);
     }

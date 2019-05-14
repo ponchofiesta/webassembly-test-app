@@ -8,9 +8,9 @@ class DeflateJS extends Benchmark {
         return pako.deflate(data, {raw: true});
     }
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
-        let dataBytes = aesjs.utils.utf8.toBytes(externalData.data);
+        let dataBytes = aesjs.utils.utf8.toBytes(benchmark.externalData.data);
         super.start();
         this.deflate(dataBytes);
         super.stop();

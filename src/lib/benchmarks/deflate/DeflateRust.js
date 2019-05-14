@@ -2,7 +2,7 @@ import Benchmark from "../Benchmark";
 
 class DeflateRust extends Benchmark {
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
         super.start();
         window.wasm.rust.deflate();
