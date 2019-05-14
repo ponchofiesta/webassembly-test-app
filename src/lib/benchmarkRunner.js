@@ -67,7 +67,7 @@ const runBenchmark = async benchmark => {
                 }
             }
             let instance = runner.factory();
-            instance.run(benchmark.parameters, benchmark.externalData);
+            instance.run(benchmark);
             //categories.push(runner.type + ": " + runner.name);
             if (categories.length < benchmark.repeat) {
                 categories.push(i + 1);

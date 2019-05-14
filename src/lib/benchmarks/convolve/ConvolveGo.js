@@ -3,20 +3,18 @@ import Benchmark from "../Benchmark";
 class ConvolveGo extends Benchmark {
 
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
 
         // draw image on canvas
-        const image = externalData.data;
-        const canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(image, 0, 0);
+        const canvas = this.createCanvas(benchmark.externalData.data);
 
         super.start();
         window.wasm.go.convolve(canvas);
         super.stop();
+
+        this.updateCanvas(benchmark.canvas, canvas);
+
         console.debug("stop " + this.constructor.name);
     }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Dimmer, Header, Image, List, Loader, Message, Segment} from 'semantic-ui-react'
+import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
 
 class Benchmark extends Component {
@@ -10,16 +10,21 @@ class Benchmark extends Component {
         }
     };
 
+    fitToParent(element) {
+        element.style.width = element.parentElement.clientWidth + "px";
+        element.style.height = (element.parentElement.clientWidth / element.width * element.height) + "px";
+    }
+
     render() {
-        return <Segment disabled={this.props.someRunning}>
-            <Dimmer inverted active={this.props.running}>
+        return <Segment>
+            {/*<Dimmer inverted active={this.props.running}>
                 <Loader disabled={!this.props.running}>Running</Loader>
-            </Dimmer>
+            </Dimmer>*/}
             <Header as="h2" floated="left">
                 {this.props.name}
                 <Header.Subheader>{this.props.description}</Header.Subheader>
             </Header>
-            <Button circular basic color="teal" icon="play circle" content="Run" onClick={() => this.run()} floated="right"/>
+            <Button circular basic color="teal" icon="play circle" content="Run" onClick={() => this.run()} floated="right"  disabled={this.props.someRunning} loading={this.props.running}/>
             <Header as="h3" style={{clear: 'both'}}>Runners</Header>
             <List horizontal divided>
                 {this.props.runners.map(runner =>
@@ -31,6 +36,21 @@ class Benchmark extends Component {
                     </List.Item>
                 )}
             </List>
+
+            {this.props.canvas && this.props.series && this.props.series[0].data.length ?
+                <React.Fragment>
+                    <Header as="h3">Canvas</Header>
+                    <div ref={div => {
+                        if (div) {
+                            // add canvas
+                            div.appendChild(this.props.canvas);
+                            this.fitToParent(this.props.canvas);
+                            window.addEventListener('resize', () => this.fitToParent(this.props.canvas), false);
+                        }
+                    }}/>
+                </React.Fragment>
+                : null}
+
             {this.props.series && this.props.series[0].data.length ?
                 <React.Fragment>
                     <Header as="h3">Results</Header>

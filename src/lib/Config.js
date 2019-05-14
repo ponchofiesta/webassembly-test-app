@@ -21,7 +21,8 @@ import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
 import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
 import ConvolveGo from "./benchmarks/convolve/ConvolveGo";
 
-const msFormatter = (value) => (value+" ms");
+const roundFormatter = value => Math.round(value);
+const msFormatter = value => roundFormatter(value) + " ms";
 
 // const barChartOptions = {
 //     chart: {
@@ -74,7 +75,8 @@ const areaChartOptions = {
         size: 7
     },
     dataLabels: {
-        enabled: true
+        enabled: true,
+        formatter: roundFormatter
     },
     xaxis: {
         title: {
@@ -85,6 +87,9 @@ const areaChartOptions = {
     yaxis: {
         title: {
             text: "Duration in ms"
+        },
+        labels: {
+            formatter: roundFormatter
         }
     },
     legend: {
@@ -338,11 +343,13 @@ const config = {
                 path: "data/icon-64x64.png",
                 repeat: 1
             },
-            repeat: 5,
+            repeat: 1,
             chart: {
                 component: Chart,
                 options: areaChartOptions
             },
+            showCanvas: true,
+            canvas: document.createElement("canvas"),
             result: [],
             error: null
         }

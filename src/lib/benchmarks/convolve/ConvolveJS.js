@@ -1,5 +1,4 @@
 import Benchmark from "../Benchmark";
-import * as convolveLib from "convolve";
 
 class ConvolveJS extends Benchmark {
 
@@ -9,8 +8,6 @@ class ConvolveJS extends Benchmark {
             0.2, 0.2, 0.2,
             0.0, 0.2, 0.0
         ];
-        // convolveLib(blur)
-        //     .canvas(canvas);
         this.convoluteFilter(canvas, blur, 1);
     }
 
@@ -54,20 +51,23 @@ class ConvolveJS extends Benchmark {
         context.putImageData(output, 0, 0);
     };
 
-    run(parameters, externalData) {
+    run(benchmark) {
         console.debug("start " + this.constructor.name);
 
         // draw image on canvas
-        const image = externalData.data;
-        const canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        const context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0);
+        const canvas = this.createCanvas(benchmark.externalData.data);
 
         super.start();
         this.convolve(canvas);
         super.stop();
+
+        const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
+        console.log(data.data[0] + ' ' + data.data[1] + ' ' + data.data[2]);
+
+
+        // draw result on canvas
+        this.updateCanvas(benchmark.canvas, canvas);
+
         console.debug("stop " + this.constructor.name);
     }
 }
