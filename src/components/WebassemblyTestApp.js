@@ -25,6 +25,7 @@ class WebassemblyTestApp extends Component {
         ])
             .then(module => {
                 window.wasm.rust = module[0];
+                window.wasm.goMem = module[1].instance.exports.mem;
                 go.run(module[1].instance);
                 this.setState({loading: false});
             })
