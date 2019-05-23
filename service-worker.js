@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/webassembly-test-app/precache-manifest.01a1ebb1506759a9360b996f30e815a4.js"
+  "/webassembly-test-app/precache-manifest.f90e44b3556cc12f62c178d24e2b90c4.js"
 );
 
 self.addEventListener('message', (event) => {
