@@ -18,15 +18,27 @@ class WebassemblyTestApp extends Component {
 
     componentDidMount() {
         const go = new window.Go();
+        const memory = new WebAssembly.Memory({initial: 1024});
 
         Promise.all([
             import("webassembly-benchmarks-rust"),
-            WebAssembly.instantiateStreaming(fetch('go/webassembly-benchmarks-go.wasm'), go.importObject)
+            WebAssembly.instantiateStreaming(fetch('go/webassembly-benchmarks-go.wasm'), {
+                env: {memory},
+                ...go.importObject
+            }),
+            // memory C library from https://github.com/guybedford/wasm-stdlib-hack/blob/master/dist/memory.wasm
+            // provides: abort, calloc, free, malloc, memcoy, memset, sbrk
+            WebAssembly.instantiateStreaming(fetch("memory.wasm"), {
+                env: {memory}
+            })
         ])
             .then(module => {
                 window.wasm.rust = module[0];
-                window.wasm.goMem = module[1].instance.exports.mem;
                 go.run(module[1].instance);
+                window.wasm.memHelper = {
+                    memory,
+                    ...module[2].instance.exports
+                };
                 this.setState({loading: false});
             })
             .catch(error => this.setState({error: error.message}));

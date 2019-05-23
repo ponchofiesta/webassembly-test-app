@@ -13,13 +13,14 @@ class ConvolveGo extends Benchmark {
 
         const context = canvas.getContext("2d");
         const size = canvas.width * canvas.height * 4;
-        const ptr = window.wasm.go.malloc(size);
+        const ptr = window.wasm.memHelper.malloc(size);
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        const dataGo = new Uint8ClampedArray(window.wasm.goMem.buffer, ptr, size);
+        const dataGo = new Uint8ClampedArray(window.wasm.memHelper.memory.buffer, ptr, size);
         const imageDataGo = new ImageData(dataGo, canvas.width, canvas.height);
         imageDataGo.data.set(imageData.data);
         window.wasm.go.convolve_mem(ptr, canvas.width, canvas.height);
         context.putImageData(imageDataGo, 0, 0);
+        window.wasm.memHelper.free(ptr);
 
         super.stop();
 

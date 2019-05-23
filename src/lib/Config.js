@@ -340,7 +340,7 @@ const config = {
             parameters: [],
             externalData: {
                 type: "image",
-                path: "data/icon-64x64.png",
+                path: "data/photo.jpg",
                 repeat: 1
             },
             repeat: 5,
