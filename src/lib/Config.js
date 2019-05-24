@@ -1,25 +1,14 @@
 import Chart from "react-apexcharts";
 import FibonacciJS from "./benchmarks/fibonacci/FibonacciJS";
-import FibonacciRust from "./benchmarks/fibonacci/FibonacciRust";
-import FibonacciGo from "./benchmarks/fibonacci/FibonacciGo";
 import HanoiJS from "./benchmarks/hanoi/HanoiJS";
-import HanoiRust from "./benchmarks/hanoi/HanoiRust";
-import HanoiGo from "./benchmarks/hanoi/HanoiGo";
 import SortJS from "./benchmarks/sort/SortJS";
-import SortRust from "./benchmarks/sort/SortRust";
-import SortGo from "./benchmarks/sort/SortGo";
 import SieveOfAtkinPrimeJS from "./benchmarks/prime/SieveOfAtkinPrimeJS";
-import SieveOfAtkinPrimeRust from "./benchmarks/prime/SieveOfAtkinPrimeRust";
-import SieveOfAtkinPrimeGo from "./benchmarks/prime/SieveOfAtkinPrimeGo";
 import AesJS from "./benchmarks/aes/AesJS";
-import AesRust from "./benchmarks/aes/AesRust";
-import AesGo from "./benchmarks/aes/AesGo";
 import DeflateJS from "./benchmarks/deflate/DeflateJS";
-import DeflateRust from "./benchmarks/deflate/DeflateRust";
-import DeflateGo from "./benchmarks/deflate/DeflateGo";
 import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
 import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
 import ConvolveGo from "./benchmarks/convolve/ConvolveGo";
+import DefaultBenchmark from "./benchmarks/DefaultBenchmark";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -135,12 +124,12 @@ const config = {
                 {
                     name: "Iterative 100m",
                     type: "rust",
-                    factory: () => new FibonacciRust()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.fibonacci(...benchmark.parameters))
                 },
                 {
                     name: "Iterative 100m",
                     type: "go",
-                    factory: () => new FibonacciGo()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.fibonacci(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -166,12 +155,12 @@ const config = {
                 {
                     name: "Recursive 20",
                     type: "rust",
-                    factory: () => new HanoiRust()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.hanoi(...benchmark.parameters))
                 },
                 {
                     name: "Recursive 20",
                     type: "go",
-                    factory: () => new HanoiGo()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.hanoi(...benchmark.parameters))
                 }
             ],
             parameters: [ 20, "A", "B", "C" ],
@@ -195,12 +184,12 @@ const config = {
                 {
                     name: "Sort",
                     type: "rust",
-                    factory: () => new SortRust()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.sort(...benchmark.parameters))
                 },
                 {
                     name: "Sort",
                     type: "go",
-                    factory: () => new SortGo()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.sort(...benchmark.parameters))
                 }
             ],
             parameters: [],
@@ -229,12 +218,12 @@ const config = {
                 {
                     name: "Prime",
                     type: "rust",
-                    factory: () => new SieveOfAtkinPrimeRust()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.prime(...benchmark.parameters))
                 },
                 {
                     name: "Prime",
                     type: "go",
-                    factory: () => new SieveOfAtkinPrimeGo()
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.prime(...benchmark.parameters))
                 }
             ],
             parameters: [3000000],
@@ -258,12 +247,12 @@ const config = {
                 {
                     name: "AES CBC",
                     type: "rust",
-                    factory: () => new AesRust()
+                    factory: () => new DefaultBenchmark(() => window.wasm.rust.aes())
                 },
                 {
                     name: "AES CBC",
                     type: "go",
-                    factory: () => new AesGo()
+                    factory: () => new DefaultBenchmark(() => window.wasm.go.aes())
                 }
             ],
             parameters: [
@@ -295,12 +284,12 @@ const config = {
                 {
                     name: "Deflate",
                     type: "rust",
-                    factory: () => new DeflateRust()
+                    factory: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 },
                 {
                     name: "Deflate",
                     type: "go",
-                    factory: () => new DeflateGo()
+                    factory: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 }
             ],
             parameters: [],
