@@ -46,6 +46,5 @@ class Benchmark {
         domCanvas.getContext("2d").putImageData(calcCanvas.getContext("2d").getImageData(0, 0, calcCanvas.width, calcCanvas.height), 0, 0);
     }
 
-
 }
 export default Benchmark;

@@ -9,6 +9,11 @@ import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
 import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
 import ConvolveGo from "./benchmarks/convolve/ConvolveGo";
 import DefaultBenchmark from "./benchmarks/DefaultBenchmark";
+import IterateJS from "./benchmarks/iterate/IterateJS";
+import StringsDynamicJS from "./benchmarks/strings/StringsDynamicJS";
+import RepeatingDefaultBenchmark from "./benchmarks/RepeatingDefaultBenchmark";
+import StringsStaticJS from "./benchmarks/strings/StringsStaticJS";
+import SumJS from "./benchmarks/sum/SumJS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -112,6 +117,130 @@ const config = {
         }
     },
     benchmarks: [
+        {
+            name: "Iterate",
+            description: "simple number iteration",
+            runners: [
+                {
+                    name: "Iterate 100m",
+                    type: "js",
+                    factory: () => new IterateJS()
+                },
+                {
+                    name: "Iterate 100m",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.iterate(...benchmark.parameters))
+                },
+                {
+                    name: "Iterate 100m",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.iterate(...benchmark.parameters))
+                }
+            ],
+            parameters: [
+                100000000
+            ],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
+            name: "Strings dynamic",
+            description: "",
+            runners: [
+                {
+                    name: "strings",
+                    type: "js",
+                    factory: () => new StringsDynamicJS()
+                },
+                {
+                    name: "strings",
+                    type: "rust",
+                    factory: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.rust.strings_dynamic(...benchmark.parameters))
+                },
+                {
+                    name: "strings",
+                    type: "go",
+                    factory: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.go.strings_dynamic(...benchmark.parameters))
+                }
+            ],
+            parameters: [
+                10000, "hello world", "world"
+            ],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
+            name: "Strings static",
+            description: "",
+            runners: [
+                {
+                    name: "strings",
+                    type: "js",
+                    factory: () => new StringsStaticJS()
+                },
+                {
+                    name: "strings",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.strings_static(...benchmark.parameters))
+                },
+                {
+                    name: "strings",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.strings_static(...benchmark.parameters))
+                }
+            ],
+            parameters: [
+                1000000
+            ],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
+            name: "Sum static",
+            description: "",
+            runners: [
+                {
+                    name: "sum",
+                    type: "js",
+                    factory: () => new SumJS()
+                },
+                {
+                    name: "sum",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.sum(...benchmark.parameters))
+                },
+                {
+                    name: "sum",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.sum(...benchmark.parameters))
+                }
+            ],
+            parameters: [
+                1000000
+            ],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
         {
             name: "Fibunacci sequence",
             description: "Some number algo",
