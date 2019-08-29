@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, ReactNode} from 'react';
 import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
 
@@ -41,17 +41,27 @@ class Benchmark extends Component {
                 )}
             </List>
 
-            {this.props.canvas && this.props.series && this.props.series[0].data.length ?
+            {this.props.canvas ?
                 <React.Fragment>
                     <Header as="h3">Canvas</Header>
                     <div ref={div => {
                         if (div) {
-                            // add canvas
+                            div.innerHTML = "";
                             div.appendChild(this.props.canvas);
                             this.fitToParent(this.props.canvas);
                             window.addEventListener('resize', () => this.fitToParent(this.props.canvas), false);
                         }
                     }}/>
+                    {this.props.video ?
+                    <div ref={div => {
+                        if (div) {
+                            div.innerHTML = "";
+                            div.appendChild(this.props.video);
+                            this.fitToParent(this.props.video);
+                            window.addEventListener('resize', () => this.fitToParent(this.props.video), false);
+                        }
+                    }}/>
+                    : null}
                 </React.Fragment>
                 : null}
 
@@ -67,7 +77,8 @@ class Benchmark extends Component {
                 </React.Fragment>
                  : null}
             {this.props.error ?
-                <Message error header="Some benchmarks had errors" content={this.props.error}/> : null
+                <Message error header="Some benchmarks had errors"
+                         content={this.props.error instanceof WebAssembly.RuntimeError ? this.props.error.stack : this.props.error}/> : null
             }
         </Segment>
     }

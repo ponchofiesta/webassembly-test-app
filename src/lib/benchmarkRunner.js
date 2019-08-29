@@ -1,5 +1,5 @@
 import config from "./Config";
-import {imageLoader} from "./imageLoader";
+import {mediaLoader} from "./mediaLoader";
 
 const loadExternalData = async externalData => {
 
@@ -7,8 +7,14 @@ const loadExternalData = async externalData => {
 
     // Download external benchmark data for JS
     if (externalData) {
+        let element;
         if (externalData.type === "image") {
-            data = await imageLoader(externalData.path);
+            element = new Image();
+        } else if (externalData.type === "video") {
+            element = document.createElement("video");
+        }
+        if (["image", "video"].includes(externalData.type)) {
+            data = await mediaLoader(externalData.path, element);
         } else {
             let response = await fetch(externalData.path);
             try {
@@ -31,6 +37,7 @@ const loadExternalData = async externalData => {
     if (data !== null) {
         externalData.data = data;
     }
+    return externalData;
 };
 
 const prepareExternalData = (externalData, runners) => {
@@ -46,7 +53,7 @@ const prepareExternalData = (externalData, runners) => {
     }
 };
 
-const runBenchmark = async benchmark => {
+const runBenchmark = async (benchmark, onLoad) => {
     let categories = [];
     let series = [];
     let colors = [];
@@ -55,7 +62,8 @@ const runBenchmark = async benchmark => {
     prepareExternalData(benchmark.externalData, benchmark.runners);
 
     // Run all benchmarks
-    benchmark.runners.forEach((runner, index) => {
+    for (let index = 0; index < benchmark.runners.length; index++) {
+        const runner = benchmark.runners[index];
         colors.push(config.players[runner.type].color);
         for (let i = 0; i < benchmark.repeat; i++) {
             if (benchmark.externalData && benchmark.externalData.type) {
@@ -67,7 +75,8 @@ const runBenchmark = async benchmark => {
                 }
             }
             let instance = runner.factory();
-            instance.run(benchmark);
+            instance.onLoad = onLoad;
+            await instance.run(benchmark);
             //categories.push(runner.type + ": " + runner.name);
             if (categories.length < benchmark.repeat) {
                 categories.push(i + 1);
@@ -81,7 +90,7 @@ const runBenchmark = async benchmark => {
             }
             series[index].data.push(instance.results());
         }
-    });
+    }
 
     //window.wasm.rust.clear_test_data(this.props.externalData.type);
     //window.wasm.go.clear_test_data(this.props.externalData.type);

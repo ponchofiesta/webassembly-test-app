@@ -38,24 +38,30 @@ class BenchmarksPage extends Component {
         });
     };
 
-    onRunBenchmark = benchmark => new Promise((resolve, reject) => {
-        this.setState(state => {
+    onBenchmarkLoad = async benchmark => {
+        await this.setStatePromise(state => {
+            let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
+            Object.assign(entry, benchmark);
+            return state;
+        });
+    };
+
+    onRunBenchmark = async benchmark => {
+        await this.setStatePromise(state => {
             let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
             entry.running = true;
             return state;
         });
-        runLater(async () =>
-            runBenchmark(benchmark)
-                .then(result => {
-                    this.onBenchmarkFinished({...benchmark, result});
-                    resolve(result);
-                })
-                .catch(error => {
-                    this.onBenchmarkFinished({...benchmark, error});
-                    reject(error);
-                })
-        );
-    });
+        let result;
+        try {
+            result = await runBenchmark(benchmark, this.onBenchmarkLoad);
+            this.onBenchmarkFinished({...benchmark, result});
+        } catch (error) {
+            result = error;
+            this.onBenchmarkFinished({...benchmark, error});
+        }
+        return result;
+    };
 
     onBenchmarkFinished = (benchmark) => {
         this.setState(state => {

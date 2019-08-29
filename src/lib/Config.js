@@ -14,37 +14,66 @@ import StringsDynamicJS from "./benchmarks/strings/StringsDynamicJS";
 import RepeatingDefaultBenchmark from "./benchmarks/RepeatingDefaultBenchmark";
 import StringsStaticJS from "./benchmarks/strings/StringsStaticJS";
 import SumJS from "./benchmarks/sum/SumJS";
+import ConvolveVideoJS from "./benchmarks/convolve_video/ConvolveVideoJS";
+import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
+const fpsFormatter = value => Math.round(value, 2) + " fps";
 
-// const barChartOptions = {
-//     chart: {
-//         width: "100%",
-//         height: 30,
-//         type: "bar"
-//     },
-//     plotOptions: {
-//         bar: {
-//             horizontal: true
-//         }
-//     },
-//     dataLabels: {
-//         enabled: true,
-//         formatter: msFormatter
-//     },
-//     xaxis: {
-//         categories: []
-//     },
-//     legend: {
-//         show: false
-//     },
-//     tooltip: {
-//         y: {
-//             formatter: msFormatter
-//         }
-//     }
-// };
+const barChartOptions = {
+    chart: {
+        width: "100%",
+        height: 64,
+        type: "bar",
+        animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 200,
+            animateGradually: {
+                enabled: true,
+                delay: 0
+            },
+            dynamicAnimation: {
+                enabled: true,
+                speed: 200
+            }
+        }
+    },
+    markers: {
+        size: 7
+    },
+    dataLabels: {
+        enabled: true,
+        formatter: fpsFormatter
+    },
+    xaxis: {
+        title: {
+            text: "Iterations"
+        },
+        categories: []
+    },
+    yaxis: {
+        title: {
+            text: "Frames per second"
+        },
+        labels: {
+            formatter: fpsFormatter
+        }
+    },
+    legend: {
+        show: true
+    },
+    title: {
+        text: 'Frame rate',
+        align: 'left'
+    },
+    tooltip: {
+        y: {
+            formatter: fpsFormatter
+        }
+    }
+};
 
 const areaChartOptions = {
     chart: {
@@ -101,7 +130,7 @@ const areaChartOptions = {
 };
 
 
-const config = {
+let config = {
     players: {
         js: {
             logo: "logos/es-ecmascript-logo.svg",
@@ -468,6 +497,43 @@ const config = {
             },
             showCanvas: true,
             canvas: document.createElement("canvas"),
+            result: [],
+            error: null
+        },
+        {
+            name: "Video filter",
+            description: "video filter",
+            runners: [
+                {
+                    name: "convolve video",
+                    type: "js",
+                    factory: () => new ConvolveVideoJS()
+                },
+                {
+                    name: "convolve video",
+                    type: "rust",
+                    factory: () => new ConvolveVideoRust()
+                },
+                /*{
+                    name: "convolve",
+                    type: "go",
+                    factory: () => new ConvolveVideoGo()
+                }*/
+            ],
+            parameters: [],
+            externalData: {
+                type: "video",
+                path: "data/flowers.mp4",
+                repeat: 1
+            },
+            repeat: 1,
+            chart: {
+                component: Chart,
+                options: barChartOptions
+            },
+            showCanvas: true,
+            canvas: null,
+            video: null,
             result: [],
             error: null
         }
