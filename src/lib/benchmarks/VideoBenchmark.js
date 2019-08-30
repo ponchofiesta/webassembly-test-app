@@ -66,6 +66,7 @@ class VideoBenchmark extends Benchmark {
         console.debug("start " + this.constructor.name);
 
         this.video = benchmark.externalData.data;
+        this.video.style = "display: none;";
         const canvas = document.createElement("canvas");
         canvas.width = this.video.videoWidth;
         canvas.height = this.video.videoHeight;

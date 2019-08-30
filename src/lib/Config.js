@@ -497,7 +497,7 @@ let config = {
                 options: areaChartOptions
             },
             showCanvas: true,
-            canvas: document.createElement("canvas"),
+            canvas: null,
             result: [],
             error: null
         },

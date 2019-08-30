@@ -2,13 +2,16 @@ import Benchmark from "../Benchmark";
 
 class ConvolveJS extends Benchmark {
 
-    convolve(canvas) {
+    image = null;
+    canvas = null;
+
+    convolve() {
         let blur = [
             0.0, 0.2, 0.0,
             0.2, 0.2, 0.2,
             0.0, 0.2, 0.0
         ];
-        this.convoluteFilter(canvas, blur, 1);
+        this.convoluteFilter(this.canvas, blur, 1);
     }
 
     convoluteFilter = (canvas, matrix, factor) => {
@@ -51,21 +54,31 @@ class ConvolveJS extends Benchmark {
         context.putImageData(output, 0, 0);
     };
 
-    run(benchmark) {
+    async run(benchmark) {
         console.debug("start " + this.constructor.name);
 
         // draw image on canvas
-        const canvas = this.createCanvas(benchmark.externalData.data);
+        this.image = benchmark.externalData.data;
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = this.image.width;
+        this.canvas.height = this.image.height;
+        const context = this.canvas.getContext('2d');
+        context.drawImage(this.image, 0, 0);
+
+        await this.onLoad({
+            ...benchmark,
+            canvas: this.canvas
+        });
 
         super.start();
-        this.convolve(canvas);
+        this.convolve();
         super.stop();
 
         //const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
         //console.log(data.data[0] + ' ' + data.data[1] + ' ' + data.data[2]);
 
         // draw result on canvas
-        this.updateCanvas(benchmark.canvas, canvas);
+        //this.updateCanvas(benchmark.canvas, canvas);
 
         console.debug("stop " + this.constructor.name);
     }
