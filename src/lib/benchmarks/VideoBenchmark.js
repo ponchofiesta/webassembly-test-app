@@ -62,6 +62,39 @@ class VideoBenchmark extends Benchmark {
         return data;
     }
 
+    async run(benchmark) {
+        console.debug("start " + this.constructor.name);
+
+        this.video = benchmark.externalData.data;
+        const canvas = document.createElement("canvas");
+        canvas.width = this.video.videoWidth;
+        canvas.height = this.video.videoHeight;
+        this.canvas = canvas;
+        this.context = canvas.getContext('2d');
+
+        await this.onLoad({
+            ...benchmark,
+            video: benchmark.externalData.data,
+            canvas: canvas
+        });
+
+        const promise = new Promise((resolve, reject) => {
+            this.video.addEventListener("ended", () => {
+                this.onEnd(resolve);
+            }, false);
+            this.video.addEventListener("error", () => {
+                this.onEnd(reject);
+            }, false);
+        });
+
+        super.start();
+
+        this.video.play();
+        this.renderVideo();
+
+        return promise;
+    }
+
     results() {
         this.result = this.frameCount / (this.stopTime - this.startTime) * 1000;
         return this.result;

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Benchmarks from "./Benchmarks";
 import {Button, Container, Divider, Header, Progress} from "semantic-ui-react";
-import runLater from "../lib/runLater";
 import {runBenchmark} from "../lib/benchmarkRunner";
 
 class BenchmarksPage extends Component {
@@ -17,25 +16,26 @@ class BenchmarksPage extends Component {
     }
 
     setStatePromise = (state) => new Promise(resolve => {
-        this.setState(state, () => resolve());
+        this.setState(state, () => {
+            setTimeout(() => resolve(), 1);
+        });
     });
 
     onRunAll = async () => {
-        this.setStatePromise({
+        await  this.setStatePromise({
             running: true,
             progress: 0,
             progressTotal: this.props.benchmarks.length
-        }).then(async () => {
-            for (let i = 0; i < this.state.benchmarks.length; i++) {
-                try {
-                    this.setState({progress: i + 1});
-                    let result = await this.onRunBenchmark(this.props.benchmarks[i]);
-                } catch(e) {
-                    console.error(e);
-                }
-            }
-            this.setState({running: false});
         });
+        for (let i = 0; i < this.state.benchmarks.length; i++) {
+            try {
+                await this.setStatePromise({progress: i + 1});
+                await this.onRunBenchmark(this.props.benchmarks[i]);
+            } catch(e) {
+                console.error(e);
+            }
+        }
+        await this.setStatePromise({running: false});
     };
 
     onBenchmarkLoad = async benchmark => {
@@ -52,31 +52,31 @@ class BenchmarksPage extends Component {
             entry.running = true;
             return state;
         });
+
         let result;
+        let error;
         try {
             result = await runBenchmark(benchmark, this.onBenchmarkLoad);
-            this.onBenchmarkFinished({...benchmark, result});
-        } catch (error) {
-            result = error;
-            this.onBenchmarkFinished({...benchmark, error});
+        } catch (e) {
+            error = e;
         }
-        return result;
-    };
 
-    onBenchmarkFinished = (benchmark) => {
-        this.setState(state => {
+        await this.setStatePromise(state => {
             let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
             entry.running = false;
-            if (benchmark.result) {
-                entry.chart.options.xaxis.categories = benchmark.result.categories;
-                entry.series = benchmark.result.series;
-                entry.chart.options.colors = benchmark.result.colors;
-            }
-            if (benchmark.error) {
-                entry.error = benchmark.error;
+            if (result) {
+                entry.chart.options.xaxis.categories = result.categories;
+                entry.series = result.series;
+                entry.chart.options.colors = result.colors;
+            } else if (error) {
+                entry.error = error;
+            } else {
+                entry.error = "Unknown error";
             }
             return state;
         });
+
+        return result;
     };
 
     render() {

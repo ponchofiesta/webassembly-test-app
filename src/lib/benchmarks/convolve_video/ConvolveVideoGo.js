@@ -1,6 +1,6 @@
 import VideoBenchmark from "../VideoBenchmark";
 
-class ConvolveVideoRust extends VideoBenchmark {
+class ConvolveVideoGo extends VideoBenchmark {
 
     constructor() {
         super();
@@ -13,8 +13,8 @@ class ConvolveVideoRust extends VideoBenchmark {
     }
 
     convolve(data, width, height) {
-        const outData = window.wasm.rust.convolve_video(data, this.video.videoWidth, this.video.videoHeight, 1/9, 6);
-        return outData;
+        data = window.wasm.go.convolve_video(data, this.canvas.width, this.canvas.height, 1/9, 6);
+        return data;
     }
 }
-export default ConvolveVideoRust;
+export default ConvolveVideoGo;

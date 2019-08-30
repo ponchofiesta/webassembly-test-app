@@ -16,10 +16,11 @@ import StringsStaticJS from "./benchmarks/strings/StringsStaticJS";
 import SumJS from "./benchmarks/sum/SumJS";
 import ConvolveVideoJS from "./benchmarks/convolve_video/ConvolveVideoJS";
 import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
+import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
-const fpsFormatter = value => Math.round(value, 2) + " fps";
+const fpsFormatter = value => value.toFixed(1) + " fps";
 
 const barChartOptions = {
     chart: {
@@ -27,7 +28,7 @@ const barChartOptions = {
         height: 64,
         type: "bar",
         animations: {
-            enabled: true,
+            enabled: false/*,
             easing: 'easeinout',
             speed: 200,
             animateGradually: {
@@ -37,7 +38,7 @@ const barChartOptions = {
             dynamicAnimation: {
                 enabled: true,
                 speed: 200
-            }
+            }*/
         }
     },
     markers: {
@@ -81,7 +82,7 @@ const areaChartOptions = {
         height: 16,
         type: "line",
         animations: {
-            enabled: true,
+            enabled: false/*,
             easing: 'easeinout',
             speed: 200,
             animateGradually: {
@@ -91,7 +92,7 @@ const areaChartOptions = {
             dynamicAnimation: {
                 enabled: true,
                 speed: 200
-            }
+            }*/
         }
     },
     markers: {
@@ -514,11 +515,11 @@ let config = {
                     type: "rust",
                     factory: () => new ConvolveVideoRust()
                 },
-                /*{
-                    name: "convolve",
+                {
+                    name: "convolve video",
                     type: "go",
                     factory: () => new ConvolveVideoGo()
-                }*/
+                }
             ],
             parameters: [],
             externalData: {
