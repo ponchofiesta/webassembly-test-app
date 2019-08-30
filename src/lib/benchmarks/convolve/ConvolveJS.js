@@ -1,9 +1,13 @@
-import Benchmark from "../Benchmark";
+import ImageBenchmark from "../ImageBenchmark";
 
-class ConvolveJS extends Benchmark {
+class ConvolveJS extends ImageBenchmark {
 
-    image = null;
-    canvas = null;
+    constructor() {
+        super();
+        this.onDraw = () => {
+            this.convolve();
+        };
+    }
 
     convolve() {
         let blur = [
@@ -11,18 +15,17 @@ class ConvolveJS extends Benchmark {
             0.2, 0.2, 0.2,
             0.0, 0.2, 0.0
         ];
-        this.convoluteFilter(this.canvas, blur, 1);
+        this.convoluteFilter(blur, 1);
     }
 
-    convoluteFilter = (canvas, matrix, factor) => {
+    convoluteFilter = (matrix, factor) => {
         const side = Math.round(Math.sqrt(matrix.length));
         const halfSide = Math.floor(side / 2);
-        const context = canvas.getContext('2d');
-        const source = context.getImageData(0, 0, canvas.width, canvas.height);
+        const source = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
         const sourceData = source.data;
         const imageWidth = source.width;
         const imageHeight = source.height;
-        const output = context.createImageData(imageWidth, imageHeight);
+        const output = this.context.createImageData(imageWidth, imageHeight);
         const outputData = output.data;
 
         for (let y = 0; y < imageHeight; y++) {
@@ -51,36 +54,7 @@ class ConvolveJS extends Benchmark {
             }
         }
 
-        context.putImageData(output, 0, 0);
+        this.context.putImageData(output, 0, 0);
     };
-
-    async run(benchmark) {
-        console.debug("start " + this.constructor.name);
-
-        // draw image on canvas
-        this.image = benchmark.externalData.data;
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = this.image.width;
-        this.canvas.height = this.image.height;
-        const context = this.canvas.getContext('2d');
-        context.drawImage(this.image, 0, 0);
-
-        await this.onLoad({
-            ...benchmark,
-            canvas: this.canvas
-        });
-
-        super.start();
-        this.convolve();
-        super.stop();
-
-        //const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
-        //console.log(data.data[0] + ' ' + data.data[1] + ' ' + data.data[2]);
-
-        // draw result on canvas
-        //this.updateCanvas(benchmark.canvas, canvas);
-
-        console.debug("stop " + this.constructor.name);
-    }
 }
 export default ConvolveJS;
