@@ -6,7 +6,6 @@ class ConvolveGo extends ImageBenchmark {
         super();
         this.onDraw = () => {
             const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-            window.wasm.rust.convolve(this.canvas);
             imageData.data.set(window.wasm.go.convolve_mem(imageData.data, this.canvas.width, this.canvas.height));
             this.context.putImageData(imageData, 0, 0);
         };
