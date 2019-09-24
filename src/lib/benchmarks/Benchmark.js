@@ -1,17 +1,11 @@
 class Benchmark {
 
+    onLoad = () => {};
+
     constructor() {
         this.result = null;
         this.startTime = null;
         this.stopTime = null;
-    }
-
-    prepareTestData(url) {
-        console.warn(this.constuctor.name + " not implemented.")
-    }
-
-    resetTestData(url) {
-        console.warn(this.constuctor.name + " not implemented.")
     }
 
     run() {

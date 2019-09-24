@@ -5,6 +5,7 @@ class ImageBenchmark extends Benchmark {
     image = null;
     canvas = null;
     context = null;
+    onDraw = () => {};
 
     async run(benchmark) {
         console.debug("start " + this.constructor.name);
