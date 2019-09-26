@@ -1,4 +1,4 @@
-import React, {Component, ReactNode} from 'react';
+import React, {Component} from 'react';
 import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/Config";
 
