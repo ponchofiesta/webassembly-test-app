@@ -5,7 +5,7 @@ class IterateJS extends Benchmark {
     iterate(max) {
         let res = 0;
         for (let i = 0; i < max; ++i) {
-            res++;
+            res += i;
         }
         return res;
     }

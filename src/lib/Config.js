@@ -17,6 +17,7 @@ import SumJS from "./benchmarks/sum/SumJS";
 import ConvolveVideoJS from "./benchmarks/convolve_video/ConvolveVideoJS";
 import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
 import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
+import Sha256JS from "./benchmarks/sha/Sha256JS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -386,6 +387,40 @@ let config = {
                 }
             ],
             parameters: [3000000],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
+            name: "Hash sha256",
+            description: "Hash sha256",
+            runners: [
+                {
+                    name: "sha256",
+                    type: "js",
+                    factory: () => new Sha256JS()
+                },
+                {
+                    name: "sha256",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(() => window.wasm.rust.sha256())
+                },
+                {
+                    name: "sha256",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(() => window.wasm.go.sha256())
+                }
+            ],
+            parameters: [],
+            externalData: {
+                type: "bytes",
+                path: "data/random.txt",
+                repeat: 100
+            },
             repeat: 5,
             chart: {
                 component: Chart,

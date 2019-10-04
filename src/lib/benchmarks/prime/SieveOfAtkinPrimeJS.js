@@ -13,17 +13,6 @@ class SieveOfAtkinPrimeJS extends Benchmark {
         // Initialise the sieve array with false values
         let sieve = Array(max).fill(false);
 
-        /* Mark siev[n] is true if one
-           of the following is true:
-        a) n = (4*x*x)+(y*y) has odd number of
-           solutions, i.e., there exist
-           odd number of distinct pairs (x, y)
-           that satisfy the equation and
-            n % 12 = 1 or n % 12 = 5.
-        b) n = (3*x*x)+(y*y) has odd number of
-           solutions and n % 12 = 7
-        c) n = (3*x*x)-(y*y) has odd number of
-           solutions, x > y and n % 12 = 11 */
         for (let x = 1; x * x < max; x++) {
             for (let y = 1; y * y < max; y++) {
 
