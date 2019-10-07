@@ -15,6 +15,9 @@ const loadExternalData = async externalData => {
         }
         if (["image", "video"].includes(externalData.type)) {
             data = await mediaLoader(externalData.path, element);
+        } else if(externalData.type === "bytes") {
+            let response = await fetch(externalData.path);
+            data = await response.arrayBuffer();
         } else {
             let response = await fetch(externalData.path);
             try {

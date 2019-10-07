@@ -2,10 +2,6 @@ import DefaultBenchmark from "./DefaultBenchmark";
 
 class RepeatingDefaultBenchmark extends DefaultBenchmark {
 
-    constructor(method) {
-        super(method);
-    }
-
     run(benchmark) {
         console.debug("start " + this.constructor.name);
 

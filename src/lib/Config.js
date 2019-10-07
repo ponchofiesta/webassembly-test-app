@@ -18,6 +18,7 @@ import ConvolveVideoJS from "./benchmarks/convolve_video/ConvolveVideoJS";
 import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
 import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
 import Sha256JS from "./benchmarks/sha/Sha256JS";
+import ExifReaderJS from "./benchmarks/exif/ExifReaderJS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -430,6 +431,40 @@ let config = {
             error: null
         },
         {
+            name: "Hash sha512",
+            description: "Hash sha512",
+            runners: [
+                {
+                    name: "sha512",
+                    type: "js",
+                    factory: () => new Sha256JS()
+                },
+                {
+                    name: "sha512",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(() => window.wasm.rust.sha512())
+                },
+                {
+                    name: "sha512",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(() => window.wasm.go.sha512())
+                }
+            ],
+            parameters: [],
+            externalData: {
+                type: "bytes",
+                path: "data/random.txt",
+                repeat: 100
+            },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            result: [],
+            error: null
+        },
+        {
             name: "Encryption",
             description: "Encryption",
             runners: [
@@ -500,6 +535,42 @@ let config = {
             result: [],
             error: null
         },
+        /*{
+            name: "EXIF Reader",
+            description: "exif reader",
+            runners: [
+                {
+                    name: "exif",
+                    type: "js",
+                    factory: () => new ExifReaderJS()
+                },
+                {
+                    name: "exif",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(() => window.wasm.rust.exif())
+                }/!*,
+                {
+                    name: "exif",
+                    type: "go",
+                    factory: () => new ConvolveGo()
+                }*!/
+            ],
+            parameters: [],
+            externalData: {
+                type: "bytes",
+                path: "data/exif.jpg",
+                repeat: 1
+            },
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
+            },
+            showCanvas: true,
+            canvas: null,
+            result: [],
+            error: null
+        },*/
         {
             name: "Convolution filter",
             description: "convolution filter",
