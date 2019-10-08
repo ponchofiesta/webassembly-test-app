@@ -19,6 +19,7 @@ import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
 import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
 import Sha256JS from "./benchmarks/sha/Sha256JS";
 import ExifReaderJS from "./benchmarks/exif/ExifReaderJS";
+import DomJS from "./benchmarks/dom/DomJS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -637,6 +638,38 @@ let config = {
             chart: {
                 component: Chart,
                 options: barChartOptions
+            },
+            showCanvas: true,
+            canvas: null,
+            video: null,
+            result: [],
+            error: null
+        },
+        {
+            name: "DOM manipulation",
+            description: "dom manipulation",
+            runners: [
+                {
+                    name: "dom",
+                    type: "js",
+                    factory: () => new DomJS()
+                },
+                {
+                    name: "dom",
+                    type: "rust",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.dom(...benchmark.parameters))
+                },
+                {
+                    name: "dom",
+                    type: "go",
+                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.dom(...benchmark.parameters))
+                }
+            ],
+            parameters: [5000],
+            repeat: 5,
+            chart: {
+                component: Chart,
+                options: areaChartOptions
             },
             showCanvas: true,
             canvas: null,
