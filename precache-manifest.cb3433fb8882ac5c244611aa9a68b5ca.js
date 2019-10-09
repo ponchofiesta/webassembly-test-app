@@ -1,35 +1,35 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d98d92d48a7df996d624",
-    "url": "/webassembly-test-app/d54dd134ee9f47194238.module.wasm"
+    "revision": "cbb51c6199b890ce744a",
+    "url": "/webassembly-test-app/973999afe34ff4b15fb6.module.wasm"
   },
   {
-    "revision": "40f6bb1af77d14ef4c901bcb8b09ccd8",
+    "revision": "3fa7e8ee79c03c4ead2e287ba336815e",
     "url": "/webassembly-test-app/index.html"
   },
   {
-    "revision": "eb6a01ae3fc2dbafb4a2",
-    "url": "/webassembly-test-app/static/css/2.8374a375.chunk.css"
+    "revision": "972e52e5a1e369d4dd41",
+    "url": "/webassembly-test-app/static/css/2.203341e8.chunk.css"
   },
   {
-    "revision": "d6dda031d05d5dd4ae97",
+    "revision": "f78bd0e0696bcaa3a296",
     "url": "/webassembly-test-app/static/css/main.795991f2.chunk.css"
   },
   {
-    "revision": "eb6a01ae3fc2dbafb4a2",
-    "url": "/webassembly-test-app/static/js/2.434ba8ed.chunk.js"
+    "revision": "972e52e5a1e369d4dd41",
+    "url": "/webassembly-test-app/static/js/2.101a365d.chunk.js"
   },
   {
-    "revision": "d98d92d48a7df996d624",
-    "url": "/webassembly-test-app/static/js/3.46bafee7.chunk.js"
+    "revision": "cbb51c6199b890ce744a",
+    "url": "/webassembly-test-app/static/js/3.c0eeec29.chunk.js"
   },
   {
-    "revision": "d6dda031d05d5dd4ae97",
-    "url": "/webassembly-test-app/static/js/main.2ec7ef09.chunk.js"
+    "revision": "f78bd0e0696bcaa3a296",
+    "url": "/webassembly-test-app/static/js/main.1cf57479.chunk.js"
   },
   {
-    "revision": "6a3b958b5996fb4540dc",
-    "url": "/webassembly-test-app/static/js/runtime~main.5bbe133b.js"
+    "revision": "773e35533e5d91184b17",
+    "url": "/webassembly-test-app/static/js/runtime-main.bf12d54f.js"
   },
   {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
