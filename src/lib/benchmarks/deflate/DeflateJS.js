@@ -10,9 +10,8 @@ class DeflateJS extends Benchmark {
 
     run(benchmark) {
         console.debug("start " + this.constructor.name);
-        let dataBytes = aesjs.utils.utf8.toBytes(benchmark.externalData.data);
         super.start();
-        this.deflate(dataBytes);
+        this.deflate(benchmark.externalData.data);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }
