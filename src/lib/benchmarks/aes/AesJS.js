@@ -16,9 +16,9 @@ class AesJS extends Benchmark {
     run(benchmark) {
         console.debug("start " + this.constructor.name);
         // deep copy whole array
-        let dataBytes = aesjs.utils.utf8.toBytes(benchmark.externalData.data);
+        //let dataBytes = aesjs.utils.utf8.toBytes(benchmark.externalData.data);
         super.start();
-        this.aes_encrypt(...benchmark.parameters, dataBytes);
+        this.aes_encrypt(...benchmark.parameters, benchmark.externalData.data);
         super.stop();
         console.debug("stop " + this.constructor.name);
     }

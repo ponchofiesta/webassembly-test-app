@@ -20,6 +20,9 @@ import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
 import Sha256JS from "./benchmarks/sha/Sha256JS";
 import ExifReaderJS from "./benchmarks/exif/ExifReaderJS";
 import DomJS from "./benchmarks/dom/DomJS";
+import Sha256CryptoJS from "./benchmarks/sha/Sha256CryptoJS";
+import Sha512CryptoJS from "./benchmarks/sha/Sha512CryptoJS";
+import Sha512JS from "./benchmarks/sha/Sha512JS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -183,7 +186,7 @@ let config = {
         },
         {
             name: "Strings dynamic",
-            description: "",
+            description: "Search for substring in string",
             runners: [
                 {
                     name: "strings",
@@ -214,7 +217,7 @@ let config = {
         },
         {
             name: "Strings static",
-            description: "",
+            description: "Search for substring in string",
             runners: [
                 {
                     name: "strings",
@@ -275,8 +278,8 @@ let config = {
             error: null
         },
         {
-            name: "Fibunacci sequence",
-            description: "Some number algo",
+            name: "Fibonacci sequence",
+            description: "Calculate the Fibonacci sequence for a given N",
             runners: [
                 {
                     name: "Iterative 100m",
@@ -307,7 +310,7 @@ let config = {
         },
         {
             name: "Towers of Hanoi",
-            description: "Some number algo",
+            description: "Move all disks from one tower to another and return the used moves as string",
             runners: [
                 {
                     name: "Recursive 20",
@@ -370,7 +373,7 @@ let config = {
         },
         {
             name: "Prime numbers",
-            description: "Sieve of Atkin",
+            description: "Find primae numbers by using Sieve of Atkin",
             runners: [
                 {
                     name: "Prime",
@@ -398,13 +401,18 @@ let config = {
             error: null
         },
         {
-            name: "Hash sha256",
-            description: "Hash sha256",
+            name: "SHA256",
+            description: "Calculate the SHA256 hash",
             runners: [
                 {
-                    name: "sha256",
+                    name: "sha256 Forge",
                     type: "js",
                     factory: () => new Sha256JS()
+                },
+                {
+                    name: "sha256 Crypto API",
+                    type: "js",
+                    factory: () => new Sha256CryptoJS()
                 },
                 {
                     name: "sha256",
@@ -422,6 +430,8 @@ let config = {
                 type: "bytes",
                 path: "data/random.txt",
                 repeat: 100
+                // path: "data/8bytes.bin",
+                // repeat: 1
             },
             repeat: 5,
             chart: {
@@ -432,13 +442,18 @@ let config = {
             error: null
         },
         {
-            name: "Hash sha512",
-            description: "Hash sha512",
+            name: "SHA512",
+            description: "Calculate the SHA512 hash",
             runners: [
                 {
-                    name: "sha512",
+                    name: "sha512 Forge",
                     type: "js",
-                    factory: () => new Sha256JS()
+                    factory: () => new Sha512JS()
+                },
+                {
+                    name: "sha512 Crypto API",
+                    type: "js",
+                    factory: () => new Sha512CryptoJS()
                 },
                 {
                     name: "sha512",
@@ -467,7 +482,7 @@ let config = {
         },
         {
             name: "Encryption",
-            description: "Encryption",
+            description: "Encrypt data using AES",
             runners: [
                 {
                     name: "AES CBC",
@@ -503,8 +518,8 @@ let config = {
             error: null
         },
         {
-            name: "Compression Deflate",
-            description: "Deflate",
+            name: "Compression",
+            description: "Compress data using Deflate",
             runners: [
                 {
                     name: "Deflate",
@@ -536,7 +551,7 @@ let config = {
             result: [],
             error: null
         },
-        /*{
+        {
             name: "EXIF Reader",
             description: "exif reader",
             runners: [
@@ -549,12 +564,12 @@ let config = {
                     name: "exif",
                     type: "rust",
                     factory: () => new DefaultBenchmark(() => window.wasm.rust.exif())
-                }/!*,
+                }/*,
                 {
                     name: "exif",
                     type: "go",
-                    factory: () => new ConvolveGo()
-                }*!/
+                    factory: () => new ExifReaderGo()
+                }*/
             ],
             parameters: [],
             externalData: {
@@ -571,10 +586,10 @@ let config = {
             canvas: null,
             result: [],
             error: null
-        },*/
+        },
         {
             name: "Convolution filter",
-            description: "convolution filter",
+            description: "Manipulate an image using a convolution filter",
             runners: [
                 {
                     name: "convolve",
@@ -610,7 +625,7 @@ let config = {
         },
         {
             name: "Video filter",
-            description: "video filter",
+            description: "Manipulate a video using a convolution filter",
             runners: [
                 {
                     name: "convolve video",
@@ -647,7 +662,7 @@ let config = {
         },
         {
             name: "DOM manipulation",
-            description: "dom manipulation",
+            description: "Create, add and remove nodes to the documents DOM tree",
             runners: [
                 {
                     name: "dom",

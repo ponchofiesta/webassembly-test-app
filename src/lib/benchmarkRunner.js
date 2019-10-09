@@ -17,7 +17,8 @@ const loadExternalData = async externalData => {
             data = await mediaLoader(externalData.path, element);
         } else if(externalData.type === "bytes") {
             let response = await fetch(externalData.path);
-            data = await response.arrayBuffer();
+            let buffer = await response.arrayBuffer();
+            data = new Uint8Array(buffer);
         } else {
             let response = await fetch(externalData.path);
             try {
@@ -27,7 +28,13 @@ const loadExternalData = async externalData => {
             }
         }
         if (externalData && externalData.repeat > 1) {
-            if (typeof data == "object") {
+            if (data instanceof Uint8Array) {
+                let array = new Uint8Array(externalData.repeat * data.length);
+                for (let i = 0; i < externalData.repeat; i++) {
+                    array.set(data, i * data.length);
+                }
+                data = array;
+            } else if (typeof data == "object") {
                 data = Array(externalData.repeat)
                     .fill(data)
                     .flat();
