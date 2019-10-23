@@ -2,14 +2,11 @@ import Benchmark from "./Benchmark";
 
 class VideoBenchmark extends Benchmark {
 
-    constructor() {
-        super();
-        this.canvas = null;
-        this.context = null;
-        this.video = null;
-        this.frameCount = 0;
-        this.onDraw = null;
-    }
+    canvas = null;
+    context = null;
+    video = null;
+    frameCount = 0;
+    onDraw = null;
 
     onEnd(resolveOrReject) {
         super.stop();

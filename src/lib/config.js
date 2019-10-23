@@ -137,7 +137,7 @@ const areaChartOptions = {
 };
 
 
-let config = {
+const config = {
     players: {
         js: {
             logo: "logos/es-ecmascript-logo.svg",
@@ -160,17 +160,17 @@ let config = {
                 {
                     name: "Iterate 100m",
                     type: "js",
-                    factory: () => new IterateJS()
+                    newInstance: () => new IterateJS()
                 },
                 {
                     name: "Iterate 100m",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.iterate(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.iterate(...benchmark.parameters))
                 },
                 {
                     name: "Iterate 100m",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.iterate(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.iterate(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -191,17 +191,17 @@ let config = {
                 {
                     name: "strings",
                     type: "js",
-                    factory: () => new StringsDynamicJS()
+                    newInstance: () => new StringsDynamicJS()
                 },
                 {
                     name: "strings",
                     type: "rust",
-                    factory: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.rust.strings_dynamic(...benchmark.parameters))
+                    newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.rust.strings_dynamic(...benchmark.parameters))
                 },
                 {
                     name: "strings",
                     type: "go",
-                    factory: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.go.strings_dynamic(...benchmark.parameters))
+                    newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.go.strings_dynamic(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -222,17 +222,17 @@ let config = {
                 {
                     name: "strings",
                     type: "js",
-                    factory: () => new StringsStaticJS()
+                    newInstance: () => new StringsStaticJS()
                 },
                 {
                     name: "strings",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.strings_static(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.strings_static(...benchmark.parameters))
                 },
                 {
                     name: "strings",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.strings_static(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.strings_static(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -253,17 +253,17 @@ let config = {
                 {
                     name: "sum",
                     type: "js",
-                    factory: () => new SumJS()
+                    newInstance: () => new SumJS()
                 },
                 {
                     name: "sum",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.sum(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sum(...benchmark.parameters))
                 },
                 {
                     name: "sum",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.sum(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sum(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -284,17 +284,17 @@ let config = {
                 {
                     name: "Iterative 100m",
                     type: "js",
-                    factory: () => new FibonacciJS()
+                    newInstance: () => new FibonacciJS()
                 },
                 {
                     name: "Iterative 100m",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.fibonacci(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.fibonacci(...benchmark.parameters))
                 },
                 {
                     name: "Iterative 100m",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.fibonacci(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.fibonacci(...benchmark.parameters))
                 }
             ],
             parameters: [
@@ -315,17 +315,17 @@ let config = {
                 {
                     name: "Recursive 20",
                     type: "js",
-                    factory: () => new HanoiJS()
+                    newInstance: () => new HanoiJS()
                 },
                 {
                     name: "Recursive 20",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.hanoi(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.hanoi(...benchmark.parameters))
                 },
                 {
                     name: "Recursive 20",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.hanoi(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.hanoi(...benchmark.parameters))
                 }
             ],
             parameters: [ 20, "A", "B", "C" ],
@@ -344,17 +344,17 @@ let config = {
                 {
                     name: "Sort",
                     type: "js",
-                    factory: () => new SortJS()
+                    newInstance: () => new SortJS()
                 },
                 {
                     name: "Sort",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.sort(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sort(...benchmark.parameters))
                 },
                 {
                     name: "Sort",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.sort(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sort(...benchmark.parameters))
                 }
             ],
             parameters: [],
@@ -378,17 +378,17 @@ let config = {
                 {
                     name: "Prime",
                     type: "js",
-                    factory: () => new SieveOfAtkinPrimeJS()
+                    newInstance: () => new SieveOfAtkinPrimeJS()
                 },
                 {
                     name: "Prime",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.prime(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.prime(...benchmark.parameters))
                 },
                 {
                     name: "Prime",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.prime(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.prime(...benchmark.parameters))
                 }
             ],
             parameters: [3000000],
@@ -407,22 +407,22 @@ let config = {
                 {
                     name: "sha256 Forge",
                     type: "js",
-                    factory: () => new Sha256JS()
+                    newInstance: () => new Sha256JS()
                 },
                 {
                     name: "sha256 Crypto API",
                     type: "js",
-                    factory: () => new Sha256CryptoJS()
+                    newInstance: () => new Sha256CryptoJS()
                 },
                 {
                     name: "sha256",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(() => window.wasm.rust.sha256())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha256())
                 },
                 {
                     name: "sha256",
                     type: "go",
-                    factory: () => new DefaultBenchmark(() => window.wasm.go.sha256())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha256())
                 }
             ],
             parameters: [],
@@ -448,22 +448,22 @@ let config = {
                 {
                     name: "sha512 Forge",
                     type: "js",
-                    factory: () => new Sha512JS()
+                    newInstance: () => new Sha512JS()
                 },
                 {
                     name: "sha512 Crypto API",
                     type: "js",
-                    factory: () => new Sha512CryptoJS()
+                    newInstance: () => new Sha512CryptoJS()
                 },
                 {
                     name: "sha512",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(() => window.wasm.rust.sha512())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha512())
                 },
                 {
                     name: "sha512",
                     type: "go",
-                    factory: () => new DefaultBenchmark(() => window.wasm.go.sha512())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha512())
                 }
             ],
             parameters: [],
@@ -487,17 +487,17 @@ let config = {
                 {
                     name: "AES CBC",
                     type: "js",
-                    factory: () => new AesJS()
+                    newInstance: () => new AesJS()
                 },
                 {
                     name: "AES CBC",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(() => window.wasm.rust.aes())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.aes())
                 },
                 {
                     name: "AES CBC",
                     type: "go",
-                    factory: () => new DefaultBenchmark(() => window.wasm.go.aes())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.aes())
                 }
             ],
             parameters: [
@@ -524,17 +524,17 @@ let config = {
                 {
                     name: "Deflate",
                     type: "js",
-                    factory: () => new DeflateJS()
+                    newInstance: () => new DeflateJS()
                 },
                 {
                     name: "Deflate",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(() => window.wasm.go.deflate())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 },
                 {
                     name: "Deflate",
                     type: "go",
-                    factory: () => new DefaultBenchmark(() => window.wasm.go.deflate())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 }
             ],
             parameters: [],
@@ -558,17 +558,17 @@ let config = {
                 {
                     name: "exif",
                     type: "js",
-                    factory: () => new ExifReaderJS()
+                    newInstance: () => new ExifReaderJS()
                 },
                 {
                     name: "exif",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(() => window.wasm.rust.exif())
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.exif())
                 }/*,
                 {
                     name: "exif",
                     type: "go",
-                    factory: () => new ExifReaderGo()
+                    newInstance: () => new ExifReaderGo()
                 }*/
             ],
             parameters: [],
@@ -594,17 +594,17 @@ let config = {
                 {
                     name: "convolve",
                     type: "js",
-                    factory: () => new ConvolveJS()
+                    newInstance: () => new ConvolveJS()
                 },
                 {
                     name: "convolve",
                     type: "rust",
-                    factory: () => new ConvolveRust()
+                    newInstance: () => new ConvolveRust()
                 },
                 {
                     name: "convolve",
                     type: "go",
-                    factory: () => new ConvolveGo()
+                    newInstance: () => new ConvolveGo()
                 }
             ],
             parameters: [],
@@ -630,17 +630,17 @@ let config = {
                 {
                     name: "convolve video",
                     type: "js",
-                    factory: () => new ConvolveVideoJS()
+                    newInstance: () => new ConvolveVideoJS()
                 },
                 {
                     name: "convolve video",
                     type: "rust",
-                    factory: () => new ConvolveVideoRust()
+                    newInstance: () => new ConvolveVideoRust()
                 },
                 {
                     name: "convolve video",
                     type: "go",
-                    factory: () => new ConvolveVideoGo()
+                    newInstance: () => new ConvolveVideoGo()
                 }
             ],
             parameters: [],
@@ -667,17 +667,17 @@ let config = {
                 {
                     name: "dom",
                     type: "js",
-                    factory: () => new DomJS()
+                    newInstance: () => new DomJS()
                 },
                 {
                     name: "dom",
                     type: "rust",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.rust.dom(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.dom(...benchmark.parameters))
                 },
                 {
                     name: "dom",
                     type: "go",
-                    factory: () => new DefaultBenchmark(benchmark => window.wasm.go.dom(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.dom(...benchmark.parameters))
                 }
             ],
             parameters: [5000],

@@ -1,4 +1,4 @@
-import config from "./Config";
+import config from "./config";
 import {mediaLoader} from "./mediaLoader";
 
 const loadExternalData = async externalData => {
@@ -84,7 +84,7 @@ const runBenchmark = async (benchmark, onLoad) => {
                     window.wasm.go.reset_test_data(benchmark.externalData.type);
                 }
             }
-            let instance = runner.factory();
+            let instance = runner.newInstance();
             instance.onLoad = onLoad;
             await instance.run(benchmark);
             //categories.push(runner.type + ": " + runner.name);

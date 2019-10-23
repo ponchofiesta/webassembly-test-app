@@ -1,6 +1,5 @@
 import Benchmark from "../Benchmark";
 import pako from "pako";
-import * as aesjs from "aes-js";
 
 class DeflateJS extends Benchmark {
 

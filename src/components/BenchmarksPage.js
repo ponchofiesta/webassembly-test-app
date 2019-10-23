@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Benchmarks from "./Benchmarks";
 import {Button, Container, Divider, Header, Progress} from "semantic-ui-react";
 import {runBenchmark} from "../lib/benchmarkRunner";
+import Benchmark from "./Benchmark";
 
 class BenchmarksPage extends Component {
 
@@ -83,16 +83,22 @@ class BenchmarksPage extends Component {
         return <Container>
             <Divider hidden />
             <Header as="h1" floated="left">Benchmarks</Header>
-            <Button circular color="teal" icon="play circle"
-                    content="Run all benchmarks" floated="right"
-                    loading={this.state.running} onClick={() => this.onRunAll()}
+            <Button circular color="teal" icon="play circle" content="Run all benchmarks" floated="right"
+                    loading={this.state.running}
+                    onClick={this.onRunAll}
                     disabled={this.state.running || this.state.benchmarks.some(bench => bench.running)}/>
             {this.state.running && this.state.progressTotal
                 ? <div style={{clear: 'both'}}>
                     <Progress value={this.state.progress} total={this.state.progressTotal} progress="ratio"/>
                 </div>
                 : null}
-            <Benchmarks benchmarks={this.state.benchmarks} someRunning={this.state.running || this.state.benchmarks.some(bench => bench.running)} onRun={this.onRunBenchmark} />
+            <div style={{clear: 'both'}}>{
+                this.state.benchmarks.map(benchmark => {
+                    return <Benchmark key={benchmark.name} {...benchmark}
+                                      someRunning={this.state.running || this.state.benchmarks.some(bench => bench.running)}
+                                      onRun={this.onRunBenchmark} />;
+                })
+            }</div>
             <Divider hidden />
         </Container>
     }

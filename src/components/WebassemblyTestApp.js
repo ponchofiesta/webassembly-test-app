@@ -3,7 +3,7 @@ import {HashRouter, Route, Switch} from "react-router-dom";
 import BenchmarksPage from "./BenchmarksPage";
 import Benchmark from "./Benchmark";
 import {Message} from "semantic-ui-react";
-import config from "../lib/Config";
+import config from "../lib/config";
 
 class WebassemblyTestApp extends Component {
 

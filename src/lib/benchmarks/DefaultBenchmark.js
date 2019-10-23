@@ -2,6 +2,8 @@ import Benchmark from "./Benchmark";
 
 class DefaultBenchmark extends Benchmark {
 
+    method;
+
     constructor(method) {
         super();
         const type = typeof method;

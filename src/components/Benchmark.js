@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
-import config from "../lib/Config";
+import config from "../lib/config";
 
 class Benchmark extends Component {
-
-    run = () => {
-        if (this.props.onRun) {
-            this.props.onRun(this.props);
-        }
-    };
 
     fitToParent(element) {
         const ratio = element.parentElement.clientWidth / element.width;
@@ -19,16 +13,25 @@ class Benchmark extends Component {
         element.style.height = (ratio * element.height) + "px";
     }
 
+    setMediaElement(parent, element) {
+        if (parent) {
+            parent.innerHTML = "";
+            parent.appendChild(element);
+            this.fitToParent(element);
+            window.addEventListener('resize', () => this.fitToParent(element), false);
+        }
+    }
+
     render() {
         return <Segment>
-            {/*<Dimmer inverted active={this.props.running}>
-                <Loader disabled={!this.props.running}>Running</Loader>
-            </Dimmer>*/}
             <Header as="h2" floated="left">
                 {this.props.name}
                 <Header.Subheader>{this.props.description}</Header.Subheader>
             </Header>
-            <Button circular basic color="teal" icon="play circle" content="Run" onClick={() => this.run()} floated="right"  disabled={this.props.someRunning} loading={this.props.running}/>
+            <Button circular basic color="teal" icon="play circle" content="Run" floated="right"
+                    onClick={() => this.props.onRun(this.props)}
+                    disabled={this.props.someRunning}
+                    loading={this.props.running}/>
             <Header as="h3" style={{clear: 'both'}}>Runners</Header>
             <List horizontal divided>
                 {this.props.runners.map(runner =>
@@ -41,32 +44,18 @@ class Benchmark extends Component {
                 )}
             </List>
 
-            {this.props.canvas ?
-                <React.Fragment>
+            {this.props.canvas
+                ? <React.Fragment>
                     <Header as="h3">Canvas</Header>
-                    <div ref={div => {
-                        if (div) {
-                            div.innerHTML = "";
-                            div.appendChild(this.props.canvas);
-                            this.fitToParent(this.props.canvas);
-                            window.addEventListener('resize', () => this.fitToParent(this.props.canvas), false);
-                        }
-                    }}/>
-                    {this.props.video ?
-                    <div ref={div => {
-                        if (div) {
-                            div.innerHTML = "";
-                            div.appendChild(this.props.video);
-                            this.fitToParent(this.props.video);
-                            window.addEventListener('resize', () => this.fitToParent(this.props.video), false);
-                        }
-                    }}/>
-                    : null}
+                    <div ref={div => this.setMediaElement(div, this.props.canvas)}/>
+                    {this.props.video
+                        ? <div ref={div => this.setMediaElement(div, this.props.video)}/>
+                        : null}
                 </React.Fragment>
                 : null}
 
-            {this.props.series && this.props.series[0].data.length ?
-                <React.Fragment>
+            {this.props.series && this.props.series[0].data.length
+                ? <React.Fragment>
                     <Header as="h3">Results</Header>
                     <this.props.chart.component
                     options={this.props.chart.options}
@@ -75,10 +64,13 @@ class Benchmark extends Component {
                     height={this.props.chart.options.chart.height * this.props.series.length * this.props.series[0].data.length + 100}
                 />
                 </React.Fragment>
-                 : null}
+                : null}
             {this.props.error ?
                 <Message error header="Some benchmarks had errors"
-                         content={this.props.error instanceof WebAssembly.RuntimeError ? this.props.error.stack : this.props.error}/> : null
+                         content={
+                             this.props.error instanceof WebAssembly.RuntimeError
+                                 ? this.props.error.stack
+                                 : this.props.error} /> : null
             }
         </Segment>
     }
