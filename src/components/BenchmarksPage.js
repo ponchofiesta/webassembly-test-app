@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Container, Divider, Header, Progress} from "semantic-ui-react";
-import {runBenchmark} from "../lib/benchmarkRunner";
+import {runBenchmarkset} from "../lib/benchmarkRunner";
 import Benchmark from "./Benchmark";
 
 class BenchmarksPage extends Component {
@@ -11,7 +11,7 @@ class BenchmarksPage extends Component {
             running: false,
             progress: 0,
             progressTotal: 0,
-            benchmarks: props.benchmarks
+            benchmarksets: props.benchmarksets
         };
     }
 
@@ -21,16 +21,16 @@ class BenchmarksPage extends Component {
         });
     });
 
-    onRunAll = async () => {
+    onRunAllBenchmarksets = async () => {
         await  this.setStatePromise({
             running: true,
             progress: 0,
-            progressTotal: this.props.benchmarks.length
+            progressTotal: this.props.benchmarksets.length
         });
-        for (let i = 0; i < this.state.benchmarks.length; i++) {
+        for (let i = 0; i < this.state.benchmarksets.length; i++) {
             try {
                 await this.setStatePromise({progress: i + 1});
-                await this.onRunBenchmark(this.props.benchmarks[i]);
+                await this.onRunBenchmarkset(this.props.benchmarksets[i]);
             } catch(e) {
                 console.error(e);
             }
@@ -38,17 +38,17 @@ class BenchmarksPage extends Component {
         await this.setStatePromise({running: false});
     };
 
-    onBenchmarkLoad = async benchmark => {
+    onBenchmarksetLoad = async benchmarkset => {
         await this.setStatePromise(state => {
-            let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
-            Object.assign(entry, benchmark);
+            let entry = state.benchmarksets.filter(entry => entry.name === benchmarkset.name)[0];
+            Object.assign(entry, benchmarkset);
             return state;
         });
     };
 
-    onRunBenchmark = async benchmark => {
+    onRunBenchmarkset = async benchmarkset => {
         await this.setStatePromise(state => {
-            let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
+            let entry = state.benchmarksets.filter(entry => entry.name === benchmarkset.name)[0];
             entry.running = true;
             return state;
         });
@@ -56,13 +56,13 @@ class BenchmarksPage extends Component {
         let result;
         let error;
         try {
-            result = await runBenchmark(benchmark, this.onBenchmarkLoad);
+            result = await runBenchmarkset(benchmarkset, this.onBenchmarksetLoad);
         } catch (e) {
             error = e;
         }
 
         await this.setStatePromise(state => {
-            let entry = state.benchmarks.filter(benchEntry => benchEntry.name === benchmark.name)[0];
+            let entry = state.benchmarksets.filter(benchEntry => benchEntry.name === benchmarkset.name)[0];
             entry.running = false;
             if (result) {
                 entry.chart.options.xaxis.categories = result.categories;
@@ -85,18 +85,18 @@ class BenchmarksPage extends Component {
             <Header as="h1" floated="left">Benchmarks</Header>
             <Button circular color="teal" icon="play circle" content="Run all benchmarks" floated="right"
                     loading={this.state.running}
-                    onClick={this.onRunAll}
-                    disabled={this.state.running || this.state.benchmarks.some(bench => bench.running)}/>
+                    onClick={this.onRunAllBenchmarksets}
+                    disabled={this.state.running || this.state.benchmarksets.some(bench => bench.running)}/>
             {this.state.running && this.state.progressTotal
                 ? <div style={{clear: 'both'}}>
                     <Progress value={this.state.progress} total={this.state.progressTotal} progress="ratio"/>
                 </div>
                 : null}
             <div style={{clear: 'both'}}>{
-                this.state.benchmarks.map(benchmark => {
+                this.state.benchmarksets.map(benchmark => {
                     return <Benchmark key={benchmark.name} {...benchmark}
-                                      someRunning={this.state.running || this.state.benchmarks.some(bench => bench.running)}
-                                      onRun={this.onRunBenchmark} />;
+                                      someRunning={this.state.running || this.state.benchmarksets.some(bench => bench.running)}
+                                      onRun={this.onRunBenchmarkset} />;
                 })
             }</div>
             <Divider hidden />

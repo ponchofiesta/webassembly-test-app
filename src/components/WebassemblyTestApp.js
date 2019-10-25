@@ -39,7 +39,7 @@ class WebassemblyTestApp extends Component {
             return <main>
                 <HashRouter>
                     <Switch>
-                        <Route path='/' render={() => <BenchmarksPage benchmarks={config.benchmarks}/>}/>
+                        <Route path='/' render={() => <BenchmarksPage benchmarksets={config.benchmarksets}/>}/>
                         <Route path='/test/:id' component={Benchmark}/>
                     </Switch>
                 </HashRouter>

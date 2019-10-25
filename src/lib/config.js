@@ -141,35 +141,38 @@ const config = {
     players: {
         js: {
             logo: "logos/es-ecmascript-logo.svg",
-            color: "rgb(248,220,61)"
+            color: "rgb(248,220,61)",
+            type: "js"
         },
         rust: {
             logo: "logos/rust-logo-blk.svg",
-            color: "black"
+            color: "black",
+            type: "wasm"
         },
         go: {
             logo: "logos/Go-Logo_Aqua.svg",
-            color: "#2DBCAF"
+            color: "#2DBCAF",
+            type: "wasm"
         }
     },
-    benchmarks: [
+    benchmarksets: [
         {
             name: "Iterate",
             description: "simple number iteration",
-            runners: [
+            benchmarks: [
                 {
                     name: "Iterate 100m",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new IterateJS()
                 },
                 {
                     name: "Iterate 100m",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.iterate(...benchmark.parameters))
                 },
                 {
                     name: "Iterate 100m",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.iterate(...benchmark.parameters))
                 }
             ],
@@ -187,20 +190,20 @@ const config = {
         {
             name: "Strings dynamic",
             description: "Search for substring in string",
-            runners: [
+            benchmarks: [
                 {
                     name: "strings",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new StringsDynamicJS()
                 },
                 {
                     name: "strings",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.rust.strings_dynamic(...benchmark.parameters))
                 },
                 {
                     name: "strings",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.go.strings_dynamic(...benchmark.parameters))
                 }
             ],
@@ -218,20 +221,20 @@ const config = {
         {
             name: "Strings static",
             description: "Search for substring in string",
-            runners: [
+            benchmarks: [
                 {
                     name: "strings",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new StringsStaticJS()
                 },
                 {
                     name: "strings",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.strings_static(...benchmark.parameters))
                 },
                 {
                     name: "strings",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.strings_static(...benchmark.parameters))
                 }
             ],
@@ -249,20 +252,20 @@ const config = {
         {
             name: "Sum static",
             description: "",
-            runners: [
+            benchmarks: [
                 {
                     name: "sum",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new SumJS()
                 },
                 {
                     name: "sum",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sum(...benchmark.parameters))
                 },
                 {
                     name: "sum",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sum(...benchmark.parameters))
                 }
             ],
@@ -280,20 +283,20 @@ const config = {
         {
             name: "Fibonacci sequence",
             description: "Calculate the Fibonacci sequence for a given N",
-            runners: [
+            benchmarks: [
                 {
                     name: "Iterative 100m",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new FibonacciJS()
                 },
                 {
                     name: "Iterative 100m",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.fibonacci(...benchmark.parameters))
                 },
                 {
                     name: "Iterative 100m",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.fibonacci(...benchmark.parameters))
                 }
             ],
@@ -311,20 +314,20 @@ const config = {
         {
             name: "Towers of Hanoi",
             description: "Move all disks from one tower to another and return the used moves as string",
-            runners: [
+            benchmarks: [
                 {
                     name: "Recursive 20",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new HanoiJS()
                 },
                 {
                     name: "Recursive 20",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.hanoi(...benchmark.parameters))
                 },
                 {
                     name: "Recursive 20",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.hanoi(...benchmark.parameters))
                 }
             ],
@@ -340,20 +343,20 @@ const config = {
         {
             name: "Sort",
             description: "Sort a list of elements containing multiple fields",
-            runners: [
+            benchmarks: [
                 {
                     name: "Sort",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new SortJS()
                 },
                 {
                     name: "Sort",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sort(...benchmark.parameters))
                 },
                 {
                     name: "Sort",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sort(...benchmark.parameters))
                 }
             ],
@@ -374,20 +377,20 @@ const config = {
         {
             name: "Prime numbers",
             description: "Find primae numbers by using Sieve of Atkin",
-            runners: [
+            benchmarks: [
                 {
                     name: "Prime",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new SieveOfAtkinPrimeJS()
                 },
                 {
                     name: "Prime",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.prime(...benchmark.parameters))
                 },
                 {
                     name: "Prime",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.prime(...benchmark.parameters))
                 }
             ],
@@ -403,25 +406,25 @@ const config = {
         {
             name: "SHA256",
             description: "Calculate the SHA256 hash",
-            runners: [
+            benchmarks: [
                 {
                     name: "sha256 Forge",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new Sha256JS()
                 },
                 {
                     name: "sha256 Crypto API",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new Sha256CryptoJS()
                 },
                 {
                     name: "sha256",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha256())
                 },
                 {
                     name: "sha256",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha256())
                 }
             ],
@@ -444,25 +447,25 @@ const config = {
         {
             name: "SHA512",
             description: "Calculate the SHA512 hash",
-            runners: [
+            benchmarks: [
                 {
                     name: "sha512 Forge",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new Sha512JS()
                 },
                 {
                     name: "sha512 Crypto API",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new Sha512CryptoJS()
                 },
                 {
                     name: "sha512",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha512())
                 },
                 {
                     name: "sha512",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha512())
                 }
             ],
@@ -483,20 +486,20 @@ const config = {
         {
             name: "Encryption",
             description: "Encrypt data using AES",
-            runners: [
+            benchmarks: [
                 {
                     name: "AES CBC",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new AesJS()
                 },
                 {
                     name: "AES CBC",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.rust.aes())
                 },
                 {
                     name: "AES CBC",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.go.aes())
                 }
             ],
@@ -520,20 +523,20 @@ const config = {
         {
             name: "Compression",
             description: "Compress data using Deflate",
-            runners: [
+            benchmarks: [
                 {
                     name: "Deflate",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new DeflateJS()
                 },
                 {
                     name: "Deflate",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 },
                 {
                     name: "Deflate",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
                 }
             ],
@@ -554,20 +557,20 @@ const config = {
         {
             name: "EXIF Reader",
             description: "exif reader",
-            runners: [
+            benchmarks: [
                 {
                     name: "exif",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new ExifReaderJS()
                 },
                 {
                     name: "exif",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(() => window.wasm.rust.exif())
                 }/*,
                 {
                     name: "exif",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new ExifReaderGo()
                 }*/
             ],
@@ -590,20 +593,20 @@ const config = {
         {
             name: "Convolution filter",
             description: "Manipulate an image using a convolution filter",
-            runners: [
+            benchmarks: [
                 {
                     name: "convolve",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new ConvolveJS()
                 },
                 {
                     name: "convolve",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new ConvolveRust()
                 },
                 {
                     name: "convolve",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new ConvolveGo()
                 }
             ],
@@ -626,20 +629,20 @@ const config = {
         {
             name: "Video filter",
             description: "Manipulate a video using a convolution filter",
-            runners: [
+            benchmarks: [
                 {
                     name: "convolve video",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new ConvolveVideoJS()
                 },
                 {
                     name: "convolve video",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new ConvolveVideoRust()
                 },
                 {
                     name: "convolve video",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new ConvolveVideoGo()
                 }
             ],
@@ -663,20 +666,20 @@ const config = {
         {
             name: "DOM manipulation",
             description: "Create, add and remove nodes to the documents DOM tree",
-            runners: [
+            benchmarks: [
                 {
                     name: "dom",
-                    type: "js",
+                    player: "js",
                     newInstance: () => new DomJS()
                 },
                 {
                     name: "dom",
-                    type: "rust",
+                    player: "rust",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.dom(...benchmark.parameters))
                 },
                 {
                     name: "dom",
-                    type: "go",
+                    player: "go",
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.dom(...benchmark.parameters))
                 }
             ],

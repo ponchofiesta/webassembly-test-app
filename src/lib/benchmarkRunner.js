@@ -50,65 +50,64 @@ const loadExternalData = async externalData => {
     return externalData;
 };
 
-const prepareExternalData = (externalData, runners) => {
-
-    // Push benchmark data to Go and Rust
-    if (externalData && ["sort", "bytes"].includes(externalData.type)) {
-        if (runners.some(runner => runner.type === "rust")) {
-            window.wasm.rust.prepare_test_data(externalData.type, externalData.data);
-        }
-        if (runners.some(runner => runner.type === "go")) {
-            window.wasm.go.prepare_test_data(externalData.type, externalData.data);
-        }
+const prepareExternalData = (externalData, benchmarks) => {
+    if (externalData && externalData.type === "bytes") {
+        Object.keys(config.players).forEach(playerName => {
+            if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
+                window.wasm[playerName].prepare_test_data(externalData.type, externalData.data);
+            }
+        });
     }
 };
 
-const removeExternalData = (externalData, runners) => {
+const resetExternalData = (externalData, benchmarks) => {
+    if (externalData && externalData.type === "bytes") {
+        Object.keys(config.players).forEach(playerName => {
+            if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
+                window.wasm[playerName].reset_test_data(externalData.type);
+            }
+        });
+    }
+};
+
+const removeExternalData = (externalData, benchmarks) => {
     if (externalData) {
-        if (["sort", "bytes"].includes(externalData.type)) {
-            if (runners.some(runner => runner.type === "rust")) {
-                window.wasm.rust.clear_test_data(externalData.type);
-            }
-            if (runners.some(runner => runner.type === "go")) {
-                window.wasm.go.clear_test_data(externalData.type);
-            }
+        if (externalData.type === "bytes") {
+            Object.keys(config.players).forEach(playerName => {
+                if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
+                    window.wasm[playerName].clear_test_data(externalData.type);
+                }
+            });
         }
         externalData.data = null;
     }
 };
 
-const runBenchmark = async (benchmark, onLoad) => {
+const runBenchmarkset = async (benchmarkset, onLoad) => {
     let categories = [];
     let series = [];
     let colors = [];
 
-    await loadExternalData(benchmark.externalData);
-    prepareExternalData(benchmark.externalData, benchmark.runners);
+    await loadExternalData(benchmarkset.externalData);
+    prepareExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
 
     // Run all benchmarks
-    for (let index = 0; index < benchmark.runners.length; index++) {
-        const runner = benchmark.runners[index];
-        colors.push(config.players[runner.type].color);
-        for (let i = 0; i < benchmark.repeat; i++) {
-            if (benchmark.externalData && benchmark.externalData.type) {
-                if (runner.type === "rust") {
-                    window.wasm.rust.reset_test_data(benchmark.externalData.type);
-                }
-                if (runner.type === "go") {
-                    window.wasm.go.reset_test_data(benchmark.externalData.type);
-                }
-            }
-            let instance = runner.newInstance();
+    for (let index = 0; index < benchmarkset.benchmarks.length; index++) {
+        const benchmark = benchmarkset.benchmarks[index];
+        colors.push(config.players[benchmark.player].color);
+        for (let i = 0; i < benchmarkset.repeat; i++) {
+            resetExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
+            let instance = benchmark.newInstance();
             instance.onLoad = onLoad;
-            await instance.run(benchmark);
-            //categories.push(runner.type + ": " + runner.name);
-            if (categories.length < benchmark.repeat) {
+            await instance.run(benchmarkset);
+            //categories.push(benchmark.player + ": " + benchmark.name);
+            if (categories.length < benchmarkset.repeat) {
                 categories.push(i + 1);
             }
             if (!series[index]) {
                 series[index] = {
                     //name: "Duration",
-                    name: runner.type + ": " + runner.name,
+                    name: benchmark.player + ": " + benchmark.name,
                     data: []
                 };
             }
@@ -116,9 +115,9 @@ const runBenchmark = async (benchmark, onLoad) => {
         }
     }
 
-    removeExternalData(benchmark.externalData, benchmark.runners);
+    removeExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
 
     return {categories, series, colors};
 };
 
-export {runBenchmark};
+export {runBenchmarkset};

@@ -32,13 +32,13 @@ class Benchmark extends Component {
                     onClick={() => this.props.onRun(this.props)}
                     disabled={this.props.someRunning}
                     loading={this.props.running}/>
-            <Header as="h3" style={{clear: 'both'}}>Runners</Header>
+            <Header as="h3" style={{clear: 'both'}}>Benchmarks</Header>
             <List horizontal divided>
-                {this.props.runners.map(runner =>
-                    <List.Item key={runner.name+"-"+runner.type}>
-                        <Image avatar src={config.players[runner.type].logo} alt={runner.type}/>
+                {this.props.benchmarks.map(benchmark =>
+                    <List.Item key={benchmark.name + "-" + benchmark.player}>
+                        <Image avatar src={config.players[benchmark.player].logo} alt={benchmark.player}/>
                         <List.Content>
-                            <List.Header>{runner.name}</List.Header>
+                            <List.Header>{benchmark.name}</List.Header>
                         </List.Content>
                     </List.Item>
                 )}
