@@ -63,6 +63,20 @@ const prepareExternalData = (externalData, runners) => {
     }
 };
 
+const removeExternalData = (externalData, runners) => {
+    if (externalData) {
+        if (["sort", "bytes"].includes(externalData.type)) {
+            if (runners.some(runner => runner.type === "rust")) {
+                window.wasm.rust.clear_test_data(externalData.type);
+            }
+            if (runners.some(runner => runner.type === "go")) {
+                window.wasm.go.clear_test_data(externalData.type);
+            }
+        }
+        externalData.data = null;
+    }
+};
+
 const runBenchmark = async (benchmark, onLoad) => {
     let categories = [];
     let series = [];
@@ -102,8 +116,7 @@ const runBenchmark = async (benchmark, onLoad) => {
         }
     }
 
-    //window.wasm.rust.clear_test_data(this.props.externalData.type);
-    //window.wasm.go.clear_test_data(this.props.externalData.type);
+    removeExternalData(benchmark.externalData, benchmark.runners);
 
     return {categories, series, colors};
 };

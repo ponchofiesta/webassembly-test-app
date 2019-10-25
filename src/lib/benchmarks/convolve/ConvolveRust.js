@@ -4,7 +4,7 @@ class ConvolveRust extends ImageBenchmark {
 
     constructor() {
         super();
-        this.onDraw = () => {
+        super.onDraw = () => {
             window.wasm.rust.convolve(this.canvas);
         };
     }

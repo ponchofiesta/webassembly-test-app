@@ -1,8 +1,8 @@
 class Benchmark {
 
-    result = null;
     startTime = null;
     stopTime = null;
+    result = null;
     onLoad = () => {};
 
     start() {

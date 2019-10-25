@@ -4,7 +4,7 @@ class ConvolveJS extends ImageBenchmark {
 
     constructor() {
         super();
-        this.onDraw = () => {
+        super.onDraw = () => {
             this.convolve();
         };
     }
