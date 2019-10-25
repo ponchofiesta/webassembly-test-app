@@ -51,7 +51,7 @@ const loadExternalData = async externalData => {
 };
 
 const prepareExternalData = (externalData, benchmarks) => {
-    if (externalData && externalData.type === "bytes") {
+    if (externalData && ["bytes", "sort"].includes(externalData.type)) {
         Object.keys(config.players).forEach(playerName => {
             if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
                 window.wasm[playerName].prepare_test_data(externalData.type, externalData.data);
@@ -61,7 +61,7 @@ const prepareExternalData = (externalData, benchmarks) => {
 };
 
 const resetExternalData = (externalData, benchmarks) => {
-    if (externalData && externalData.type === "bytes") {
+    if (externalData && ["bytes", "sort"].includes(externalData.type)) {
         Object.keys(config.players).forEach(playerName => {
             if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
                 window.wasm[playerName].reset_test_data(externalData.type);
@@ -72,7 +72,7 @@ const resetExternalData = (externalData, benchmarks) => {
 
 const removeExternalData = (externalData, benchmarks) => {
     if (externalData) {
-        if (externalData.type === "bytes") {
+        if (["bytes", "sort"].includes(externalData.type)) {
             Object.keys(config.players).forEach(playerName => {
                 if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
                     window.wasm[playerName].clear_test_data(externalData.type);
