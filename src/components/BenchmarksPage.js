@@ -82,7 +82,7 @@ class BenchmarksPage extends Component {
     render() {
         return <Container>
             <Divider hidden />
-            <Header as="h1" floated="left">Benchmarks</Header>
+            <Header as="h1" floated="left">Benchmark-Sets</Header>
             <Button circular color="teal" icon="play circle" content="Run all benchmarks" floated="right"
                     loading={this.state.running}
                     onClick={this.onRunAllBenchmarksets}
