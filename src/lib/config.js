@@ -1,4 +1,3 @@
-import Chart from "react-apexcharts";
 import FibonacciJS from "./benchmarks/fibonacci/FibonacciJS";
 import HanoiJS from "./benchmarks/hanoi/HanoiJS";
 import SortJS from "./benchmarks/sort/SortJS";
@@ -180,10 +179,7 @@ const config = {
                 100000000
             ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -211,10 +207,7 @@ const config = {
                 10000, "hello world", "world"
             ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -242,10 +235,7 @@ const config = {
                 1000000
             ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -273,10 +263,7 @@ const config = {
                 1000000
             ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -304,10 +291,7 @@ const config = {
                 100000000
             ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -333,10 +317,7 @@ const config = {
             ],
             parameters: [ 20, "A", "B", "C" ],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -367,10 +348,7 @@ const config = {
                 repeat: 100
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -396,10 +374,7 @@ const config = {
             ],
             parameters: [3000000],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -437,10 +412,7 @@ const config = {
                 // repeat: 1
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -476,10 +448,7 @@ const config = {
                 repeat: 100
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -513,10 +482,7 @@ const config = {
                 repeat: 100
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -547,10 +513,7 @@ const config = {
                 repeat: 500
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             result: [],
             error: null
         },
@@ -581,10 +544,7 @@ const config = {
                 repeat: 1
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             showCanvas: true,
             canvas: null,
             result: [],
@@ -617,10 +577,7 @@ const config = {
                 repeat: 1
             },
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             showCanvas: true,
             canvas: null,
             result: [],
@@ -653,10 +610,7 @@ const config = {
                 repeat: 1
             },
             repeat: 1,
-            chart: {
-                component: Chart,
-                options: barChartOptions
-            },
+            chart: barChartOptions,
             showCanvas: true,
             canvas: null,
             video: null,
@@ -685,10 +639,7 @@ const config = {
             ],
             parameters: [5000],
             repeat: 5,
-            chart: {
-                component: Chart,
-                options: areaChartOptions
-            },
+            chart: areaChartOptions,
             showCanvas: true,
             canvas: null,
             video: null,

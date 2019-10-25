@@ -65,9 +65,9 @@ class BenchmarksPage extends Component {
             let entry = state.benchmarksets.filter(benchEntry => benchEntry.name === benchmarkset.name)[0];
             entry.running = false;
             if (result) {
-                entry.chart.options.xaxis.categories = result.categories;
+                entry.chart.xaxis.categories = result.categories;
                 entry.series = result.series;
-                entry.chart.options.colors = result.colors;
+                entry.chart.colors = result.colors;
             } else if (error) {
                 entry.error = error;
             } else {

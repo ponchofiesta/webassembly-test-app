@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
 import config from "../lib/config";
+import Chart from "react-apexcharts";
 
 class Benchmark extends Component {
 
@@ -57,11 +58,11 @@ class Benchmark extends Component {
             {this.props.series && this.props.series[0].data.length
                 ? <React.Fragment>
                     <Header as="h3">Results</Header>
-                    <this.props.chart.component
-                    options={this.props.chart.options}
+                    <Chart
+                    options={this.props.chart}
                     series={this.props.series}
-                    {...this.props.chart.options.chart}
-                    height={this.props.chart.options.chart.height * this.props.series.length * this.props.series[0].data.length + 100}
+                    {...this.props.chart.chart}
+                    height={this.props.chart.chart.height * this.props.series.length * this.props.series[0].data.length + 100}
                 />
                 </React.Fragment>
                 : null}
