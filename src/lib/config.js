@@ -22,6 +22,8 @@ import DomJS from "./benchmarks/dom/DomJS";
 import Sha256CryptoJS from "./benchmarks/sha/Sha256CryptoJS";
 import Sha512CryptoJS from "./benchmarks/sha/Sha512CryptoJS";
 import Sha512JS from "./benchmarks/sha/Sha512JS";
+import Base64JS from "./benchmarks/base64/Base64JS";
+import Base64btoaJS from "./benchmarks/base64/Base64btoaJS";
 
 const roundFormatter = value => Math.round(value);
 const msFormatter = value => roundFormatter(value) + " ms";
@@ -156,6 +158,42 @@ const config = {
     },
     benchmarksets: [
         {
+            name: "Base64",
+            description: "Calculate Base64 string representation",
+            benchmarks: [
+                {
+                    name: "base64 btoa()",
+                    player: "js",
+                    newInstance: () => new Base64btoaJS()
+                },
+                {
+                    name: "base64",
+                    player: "js",
+                    newInstance: () => new Base64JS()
+                },
+                {
+                    name: "base64",
+                    player: "rust",
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.base64(benchmark.externalData.data))
+                },
+                {
+                    name: "base64",
+                    player: "go",
+                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.base64(benchmark.externalData.data))
+                }
+            ],
+            parameters: [],
+            externalData: {
+                type: "bytes",
+                path: "data/random.txt",
+                repeat: 100
+            },
+            repeat: 5,
+            chart: areaChartOptions,
+            result: [],
+            error: null
+        },
+        /*{
             name: "Iterate",
             description: "simple number iteration",
             benchmarks: [
@@ -182,8 +220,8 @@ const config = {
             chart: areaChartOptions,
             result: [],
             error: null
-        },
-        {
+        },*/
+        /*{
             name: "Strings dynamic",
             description: "Search for substring in string",
             benchmarks: [
@@ -320,7 +358,7 @@ const config = {
             chart: areaChartOptions,
             result: [],
             error: null
-        },
+        },*/
         {
             name: "Sort",
             description: "Sort a list of elements containing multiple fields",
@@ -517,7 +555,7 @@ const config = {
             result: [],
             error: null
         },
-        {
+        /*{
             name: "EXIF Reader",
             description: "exif reader",
             benchmarks: [
@@ -535,7 +573,7 @@ const config = {
                     name: "exif",
                     player: "go",
                     newInstance: () => new ExifReaderGo()
-                }*/
+                }* /
             ],
             parameters: [],
             externalData: {
@@ -549,7 +587,7 @@ const config = {
             canvas: null,
             result: [],
             error: null
-        },
+        },*/
         {
             name: "Convolution filter",
             description: "Manipulate an image using a convolution filter",

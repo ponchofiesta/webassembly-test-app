@@ -15,7 +15,7 @@ class BenchmarksPage extends Component {
         };
     }
 
-    setStatePromise = (state) => new Promise(resolve => {
+    setStatePromise = state => new Promise(resolve => {
         this.setState(state, () => {
             setTimeout(() => resolve(), 1);
         });

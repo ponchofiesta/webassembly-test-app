@@ -50,72 +50,73 @@ const loadExternalData = async externalData => {
     return externalData;
 };
 
-const prepareExternalData = (externalData, benchmarks) => {
+const doExternalData = (externalData, benchmarks, what) => {
     if (externalData && ["bytes", "sort"].includes(externalData.type)) {
         Object.keys(config.players).forEach(playerName => {
             if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
-                window.wasm[playerName].prepare_test_data(externalData.type, externalData.data);
-            }
-        });
-    }
-};
-
-const resetExternalData = (externalData, benchmarks) => {
-    if (externalData && ["bytes", "sort"].includes(externalData.type)) {
-        Object.keys(config.players).forEach(playerName => {
-            if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
-                window.wasm[playerName].reset_test_data(externalData.type);
-            }
-        });
-    }
-};
-
-const removeExternalData = (externalData, benchmarks) => {
-    if (externalData) {
-        if (["bytes", "sort"].includes(externalData.type)) {
-            Object.keys(config.players).forEach(playerName => {
-                if (config.players[playerName].type === "wasm" && benchmarks.some(benchmark => benchmark.player === playerName)) {
-                    window.wasm[playerName].clear_test_data(externalData.type);
+                switch (what) {
+                    case "prepare":
+                        window.wasm[playerName].prepare_test_data(externalData.type, externalData.data);
+                        break;
+                    case "reset":
+                        window.wasm[playerName].reset_test_data(externalData.type);
+                        break;
+                    case "clear":
+                        window.wasm[playerName].clear_test_data(externalData.type);
+                        break;
                 }
-            });
-        }
+
+            }
+        });
+    }
+    if (externalData && what === "clear") {
         externalData.data = null;
     }
 };
 
+const prepareExternalData = (externalData, benchmarks) => doExternalData(externalData, benchmarks, "prepare");
+const resetExternalData = (externalData, benchmarks) => doExternalData(externalData, benchmarks, "reset");
+const clearExternalData = (externalData, benchmarks) => doExternalData(externalData, benchmarks, "clear");
+
 const runBenchmarkset = async (benchmarkset, onLoad) => {
-    let categories = [];
-    let series = [];
-    let colors = [];
 
     await loadExternalData(benchmarkset.externalData);
     prepareExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
 
-    // Run all benchmarks
+    // Prepare statistics
+    let categories = [];
+    let series = [];
+    let colors = [];
+
     for (let index = 0; index < benchmarkset.benchmarks.length; index++) {
         const benchmark = benchmarkset.benchmarks[index];
         colors.push(config.players[benchmark.player].color);
         for (let i = 0; i < benchmarkset.repeat; i++) {
-            resetExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
-            let instance = benchmark.newInstance();
-            instance.onLoad = onLoad;
-            await instance.run(benchmarkset);
-            //categories.push(benchmark.player + ": " + benchmark.name);
             if (categories.length < benchmarkset.repeat) {
                 categories.push(i + 1);
             }
             if (!series[index]) {
                 series[index] = {
-                    //name: "Duration",
                     name: benchmark.player + ": " + benchmark.name,
                     data: []
                 };
             }
+        }
+    }
+
+    // Run all benchmarks
+    for (let index = 0; index < benchmarkset.benchmarks.length; index++) {
+        const benchmark = benchmarkset.benchmarks[index];
+        for (let i = 0; i < benchmarkset.repeat; i++) {
+            resetExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
+            let instance = benchmark.newInstance();
+            instance.onLoad = onLoad;
+            await instance.run(benchmarkset);
             series[index].data.push(instance.results());
         }
     }
 
-    removeExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
+    clearExternalData(benchmarkset.externalData, benchmarkset.benchmarks);
 
     return {categories, series, colors};
 };

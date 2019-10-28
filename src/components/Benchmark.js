@@ -69,7 +69,7 @@ class Benchmark extends Component {
             {this.props.error ?
                 <Message error header="Some benchmarks had errors"
                          content={
-                             this.props.error instanceof WebAssembly.RuntimeError
+                             this.props.error instanceof Error
                                  ? this.props.error.stack
                                  : this.props.error} /> : null
             }
