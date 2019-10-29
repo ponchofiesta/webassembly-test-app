@@ -1,5 +1,5 @@
-import FibonacciJS from "./benchmarks/fibonacci/FibonacciJS";
-import HanoiJS from "./benchmarks/hanoi/HanoiJS";
+//import FibonacciJS from "./benchmarks/fibonacci/FibonacciJS";
+//import HanoiJS from "./benchmarks/hanoi/HanoiJS";
 import SortJS from "./benchmarks/sort/SortJS";
 import SieveOfAtkinPrimeJS from "./benchmarks/prime/SieveOfAtkinPrimeJS";
 import AesJS from "./benchmarks/aes/AesJS";
@@ -8,31 +8,28 @@ import ConvolveJS from "./benchmarks/convolve/ConvolveJS";
 import ConvolveRust from "./benchmarks/convolve/ConvolveRust";
 import ConvolveGo from "./benchmarks/convolve/ConvolveGo";
 import DefaultBenchmark from "./benchmarks/DefaultBenchmark";
-import IterateJS from "./benchmarks/iterate/IterateJS";
-import StringsDynamicJS from "./benchmarks/strings/StringsDynamicJS";
-import RepeatingDefaultBenchmark from "./benchmarks/RepeatingDefaultBenchmark";
-import StringsStaticJS from "./benchmarks/strings/StringsStaticJS";
-import SumJS from "./benchmarks/sum/SumJS";
+//import IterateJS from "./benchmarks/iterate/IterateJS";
+//import StringsDynamicJS from "./benchmarks/strings/StringsDynamicJS";
+//import RepeatingDefaultBenchmark from "./benchmarks/RepeatingDefaultBenchmark";
+//import StringsStaticJS from "./benchmarks/strings/StringsStaticJS";
+//import SumJS from "./benchmarks/sum/SumJS";
 import ConvolveVideoJS from "./benchmarks/convolve_video/ConvolveVideoJS";
 import ConvolveVideoRust from "./benchmarks/convolve_video/ConvolveVideoRust";
 import ConvolveVideoGo from "./benchmarks/convolve_video/ConvolveVideoGo";
 import Sha256JS from "./benchmarks/sha/Sha256JS";
-import ExifReaderJS from "./benchmarks/exif/ExifReaderJS";
+//import ExifReaderJS from "./benchmarks/exif/ExifReaderJS";
 import DomJS from "./benchmarks/dom/DomJS";
 import Sha256CryptoJS from "./benchmarks/sha/Sha256CryptoJS";
 import Sha512CryptoJS from "./benchmarks/sha/Sha512CryptoJS";
 import Sha512JS from "./benchmarks/sha/Sha512JS";
 import Base64JS from "./benchmarks/base64/Base64JS";
 import Base64btoaJS from "./benchmarks/base64/Base64btoaJS";
-
-const roundFormatter = value => Math.round(value);
-const msFormatter = value => roundFormatter(value) + " ms";
-const fpsFormatter = value => value.toFixed(1) + " fps";
+import {fpsFormatter, msFormatter, roundFormatter} from "./util";
 
 const barChartOptions = {
     chart: {
         width: "100%",
-        height: 64,
+        height: 300,
         type: "bar",
         animations: {
             enabled: false/*,
@@ -174,19 +171,29 @@ const config = {
                 {
                     name: "base64",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.base64(benchmark.externalData.data))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.base64(benchmarkset.externalData.data))
+                },
+                {
+                    name: "base64 prepared",
+                    player: "rust",
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.base64_prepared())
                 },
                 {
                     name: "base64",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.base64(benchmark.externalData.data))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.base64(benchmarkset.externalData.data))
+                },
+                {
+                    name: "base64 prepared",
+                    player: "go",
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.base64_prepared())
                 }
             ],
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random.txt",
-                repeat: 100
+                path: "data/random10K.bin",
+                repeat: 1
             },
             repeat: 5,
             chart: areaChartOptions,
@@ -205,12 +212,12 @@ const config = {
                 {
                     name: "Iterate 100m",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.iterate(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.iterate(...benchmarkset.parameters))
                 },
                 {
                     name: "Iterate 100m",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.iterate(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.iterate(...benchmarkset.parameters))
                 }
             ],
             parameters: [
@@ -233,12 +240,12 @@ const config = {
                 {
                     name: "strings",
                     player: "rust",
-                    newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.rust.strings_dynamic(...benchmark.parameters))
+                    newInstance: () => new RepeatingDefaultBenchmark(benchmarkset => window.wasm.rust.strings_dynamic(...benchmarkset.parameters))
                 },
                 {
                     name: "strings",
                     player: "go",
-                    newInstance: () => new RepeatingDefaultBenchmark(benchmark => window.wasm.go.strings_dynamic(...benchmark.parameters))
+                    newInstance: () => new RepeatingDefaultBenchmark(benchmarkset => window.wasm.go.strings_dynamic(...benchmarkset.parameters))
                 }
             ],
             parameters: [
@@ -261,12 +268,12 @@ const config = {
                 {
                     name: "strings",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.strings_static(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.strings_static(...benchmarkset.parameters))
                 },
                 {
                     name: "strings",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.strings_static(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.strings_static(...benchmarkset.parameters))
                 }
             ],
             parameters: [
@@ -289,12 +296,12 @@ const config = {
                 {
                     name: "sum",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sum(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.sum(...benchmarkset.parameters))
                 },
                 {
                     name: "sum",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sum(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.sum(...benchmarkset.parameters))
                 }
             ],
             parameters: [
@@ -317,12 +324,12 @@ const config = {
                 {
                     name: "Iterative 100m",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.fibonacci(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.fibonacci(...benchmarkset.parameters))
                 },
                 {
                     name: "Iterative 100m",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.fibonacci(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.fibonacci(...benchmarkset.parameters))
                 }
             ],
             parameters: [
@@ -345,12 +352,12 @@ const config = {
                 {
                     name: "Recursive 20",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.hanoi(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.hanoi(...benchmarkset.parameters))
                 },
                 {
                     name: "Recursive 20",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.hanoi(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.hanoi(...benchmarkset.parameters))
                 }
             ],
             parameters: [ 20, "A", "B", "C" ],
@@ -371,12 +378,12 @@ const config = {
                 {
                     name: "Sort",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.sort(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.sort(...benchmarkset.parameters))
                 },
                 {
                     name: "Sort",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.sort(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.sort(...benchmarkset.parameters))
                 }
             ],
             parameters: [],
@@ -390,7 +397,7 @@ const config = {
             result: [],
             error: null
         },
-        {
+        /*{
             name: "Prime numbers",
             description: "Find primae numbers by using Sieve of Atkin",
             benchmarks: [
@@ -402,12 +409,12 @@ const config = {
                 {
                     name: "Prime",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.rust.prime(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.prime(...benchmarkset.parameters))
                 },
                 {
                     name: "Prime",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.prime(...benchmark.parameters))
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.prime(...benchmarkset.parameters))
                 }
             ],
             parameters: [3000000],
@@ -415,7 +422,7 @@ const config = {
             chart: areaChartOptions,
             result: [],
             error: null
-        },
+        },*/
         {
             name: "SHA256",
             description: "Calculate the SHA256 hash",
@@ -433,12 +440,22 @@ const config = {
                 {
                     name: "sha256",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha256())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.sha256(benchmarkset.externalData.data))
+                },
+                {
+                    name: "sha256 data prepared",
+                    player: "rust",
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.sha256_prepared())
                 },
                 {
                     name: "sha256",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha256())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.sha256(benchmarkset.externalData.data))
+                },
+                {
+                    name: "sha256 prepared",
+                    player: "go",
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.sha256_prepared())
                 }
             ],
             parameters: [],
@@ -471,12 +488,12 @@ const config = {
                 {
                     name: "sha512",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.sha512())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.sha512(benchmarkset.externalData.data))
                 },
                 {
                     name: "sha512",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.sha512())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.sha512(benchmarkset.externalData.data))
                 }
             ],
             parameters: [],
@@ -502,12 +519,12 @@ const config = {
                 {
                     name: "AES CBC",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.aes())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.aes(benchmarkset.externalData.data))
                 },
                 {
                     name: "AES CBC",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.aes())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.aes(benchmarkset.externalData.data))
                 }
             ],
             parameters: [
@@ -536,12 +553,22 @@ const config = {
                 {
                     name: "Deflate",
                     player: "rust",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.rust.deflate(benchmarkset.externalData.data))
+                },
+                {
+                    name: "Deflate prepared",
+                    player: "rust",
+                    newInstance: () => new DefaultBenchmark(() => window.wasm.rust.deflate_prepared())
                 },
                 {
                     name: "Deflate",
                     player: "go",
-                    newInstance: () => new DefaultBenchmark(() => window.wasm.go.deflate())
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.deflate(benchmarkset.externalData.data))
+                },
+                {
+                    name: "Deflate prepared",
+                    player: "go",
+                    newInstance: () => new DefaultBenchmark(benchmarkset => window.wasm.go.deflate_prepared())
                 }
             ],
             parameters: [],

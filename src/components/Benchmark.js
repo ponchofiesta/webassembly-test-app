@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Header, Image, List, Message, Segment} from 'semantic-ui-react'
+import {Button, Header, Image, List, Message, Segment, Table} from 'semantic-ui-react'
 import config from "../lib/config";
 import Chart from "react-apexcharts";
+import {roundFormatter} from "../lib/util";
 
 class Benchmark extends Component {
 
@@ -21,6 +22,15 @@ class Benchmark extends Component {
             this.fitToParent(element);
             window.addEventListener('resize', () => this.fitToParent(element), false);
         }
+    }
+
+    seriesAvg(series) {
+        return series.map(series => {
+            return {
+                name: series.name,
+                avg: series.data.reduce((a, b) => a + b, 0) / series.data.length
+            }
+        });
     }
 
     render() {
@@ -62,8 +72,22 @@ class Benchmark extends Component {
                     options={this.props.chart}
                     series={this.props.series}
                     {...this.props.chart.chart}
-                    height={this.props.chart.chart.height * this.props.series.length * this.props.series[0].data.length + 100}
+                    height="300"
                 />
+                    <Table definition celled>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell />
+                                {this.props.series.map(series => <Table.HeaderCell>{series.name}</Table.HeaderCell>)}
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            <Table.Row>
+                                <Table.Cell>Average</Table.Cell>
+                                {this.seriesAvg(this.props.series).map(series => <Table.Cell>{roundFormatter(series.avg)}</Table.Cell>)}
+                            </Table.Row>
+                        </Table.Body>
+                    </Table>
                 </React.Fragment>
                 : null}
             {this.props.error ?

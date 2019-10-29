@@ -8,13 +8,13 @@ class VideoBenchmark extends Benchmark {
     frameCount = 0;
     onDraw = null;
 
-    onEnd(resolveOrReject) {
+    onEnd = resolveOrReject => {
         super.stop();
         console.debug("stop " + this.constructor.name);
         resolveOrReject();
-    }
+    };
 
-    getVideoFrame() {
+    getVideoFrame = () => {
         const canvas = document.createElement('canvas');
         canvas.width = this.video.videoWidth;
         canvas.height =  this.video.videoHeight;
@@ -22,14 +22,14 @@ class VideoBenchmark extends Benchmark {
         context.drawImage(this.video, 0, 0, canvas.width, canvas.height);
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         return imageData;
-    }
+    };
 
-    renderVideo() {
+    renderVideo = () => {
         this.onDraw();
         if (!this.video.paused) {
-            requestAnimationFrame(this.renderVideo.bind(this));
+            requestAnimationFrame(this.renderVideo);
         }
-    }
+    };
 
     async run(benchmark) {
         console.debug("start " + this.constructor.name);

@@ -73,6 +73,7 @@ class BenchmarksPage extends Component {
             } else {
                 entry.error = "Unknown error";
             }
+            entry.canvas = null;
             return state;
         });
 

@@ -64,8 +64,9 @@ const doExternalData = (externalData, benchmarks, what) => {
                     case "clear":
                         window.wasm[playerName].clear_test_data(externalData.type);
                         break;
+                    default:
+                        break;
                 }
-
             }
         });
     }
