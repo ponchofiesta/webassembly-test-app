@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/webassembly-test-app/f24b9ab8a89aa4205c15.module.wasm"
   },
   {
-    "revision": "b772fd63864adec97ddf2f66560a0dc8",
+    "revision": "41fac3a2988614dbc970a02852ada49b",
     "url": "/webassembly-test-app/index.html"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/webassembly-test-app/static/css/2.26f5942a.chunk.css"
   },
   {
-    "revision": "d754a16e532eaca7a01d",
+    "revision": "f39f93078827d30c061f",
     "url": "/webassembly-test-app/static/css/main.795991f2.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/webassembly-test-app/static/js/3.53ac83d7.chunk.js"
   },
   {
-    "revision": "d754a16e532eaca7a01d",
-    "url": "/webassembly-test-app/static/js/main.1721600d.chunk.js"
+    "revision": "f39f93078827d30c061f",
+    "url": "/webassembly-test-app/static/js/main.c9fd6fbb.chunk.js"
   },
   {
     "revision": "39e769bd2e872b63b76f",
