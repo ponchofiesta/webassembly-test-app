@@ -78,13 +78,13 @@ class Benchmark extends Component {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell />
-                                {this.props.series.map(series => <Table.HeaderCell>{series.name}</Table.HeaderCell>)}
+                                {this.props.series.map(series => <Table.HeaderCell key={series.name}>{series.name}</Table.HeaderCell>)}
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             <Table.Row>
                                 <Table.Cell>Average</Table.Cell>
-                                {this.seriesAvg(this.props.series).map(series => <Table.Cell>{roundFormatter(series.avg)}</Table.Cell>)}
+                                {this.seriesAvg(this.props.series).map(series => <Table.Cell key={series.name}>{roundFormatter(series.avg)}</Table.Cell>)}
                             </Table.Row>
                         </Table.Body>
                     </Table>

@@ -192,10 +192,10 @@ const config = {
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random10K.bin",
+                path: "data/random100.bin",
                 repeat: 1
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -389,10 +389,10 @@ const config = {
             parameters: [],
             externalData: {
                 type: "sort",
-                path: "data/users.json",
+                path: "data/users1000.json",
                 repeat: 100
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -461,12 +461,12 @@ const config = {
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random.txt",
-                repeat: 100
+                path: "data/random1K.bin",
+                repeat: 1000
                 // path: "data/8bytes.bin",
                 // repeat: 1
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -499,10 +499,10 @@ const config = {
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random.txt",
-                repeat: 100
+                path: "data/random1K.bin",
+                repeat: 1000
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -533,10 +533,10 @@ const config = {
             ],
             externalData: {
                 type: "bytes",
-                path: "data/random.txt",
-                repeat: 100
+                path: "data/random1K.bin",
+                repeat: 1000
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -574,10 +574,10 @@ const config = {
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random.txt",
-                repeat: 500
+                path: "data/random1K.bin",
+                repeat: 1000
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             result: [],
             error: null
@@ -641,7 +641,7 @@ const config = {
                 path: "data/photo.jpg",
                 repeat: 1
             },
-            repeat: 5,
+            repeat: 20,
             chart: areaChartOptions,
             showCanvas: true,
             canvas: null,
@@ -702,8 +702,8 @@ const config = {
                     newInstance: () => new DefaultBenchmark(benchmark => window.wasm.go.dom(...benchmark.parameters))
                 }
             ],
-            parameters: [5000],
-            repeat: 5,
+            parameters: [1000],
+            repeat: 20,
             chart: areaChartOptions,
             showCanvas: true,
             canvas: null,
