@@ -1,28 +1,28 @@
 {
   "files": {
     "main.css": "/webassembly-test-app/static/css/main.795991f2.chunk.css",
-    "main.js": "/webassembly-test-app/static/js/main.1cf57479.chunk.js",
-    "main.js.map": "/webassembly-test-app/static/js/main.1cf57479.chunk.js.map",
-    "runtime-main.js": "/webassembly-test-app/static/js/runtime-main.bf12d54f.js",
-    "runtime-main.js.map": "/webassembly-test-app/static/js/runtime-main.bf12d54f.js.map",
-    "static/css/2.203341e8.chunk.css": "/webassembly-test-app/static/css/2.203341e8.chunk.css",
-    "static/js/2.101a365d.chunk.js": "/webassembly-test-app/static/js/2.101a365d.chunk.js",
-    "static/js/2.101a365d.chunk.js.map": "/webassembly-test-app/static/js/2.101a365d.chunk.js.map",
-    "static/js/3.c0eeec29.chunk.js": "/webassembly-test-app/static/js/3.c0eeec29.chunk.js",
-    "973999afe34ff4b15fb6.module.wasm": "/webassembly-test-app/973999afe34ff4b15fb6.module.wasm",
-    "static/js/3.c0eeec29.chunk.js.map": "/webassembly-test-app/static/js/3.c0eeec29.chunk.js.map",
+    "main.js": "/webassembly-test-app/static/js/main.1721600d.chunk.js",
+    "main.js.map": "/webassembly-test-app/static/js/main.1721600d.chunk.js.map",
+    "runtime-main.js": "/webassembly-test-app/static/js/runtime-main.a7e6047f.js",
+    "runtime-main.js.map": "/webassembly-test-app/static/js/runtime-main.a7e6047f.js.map",
+    "static/css/2.26f5942a.chunk.css": "/webassembly-test-app/static/css/2.26f5942a.chunk.css",
+    "static/js/2.db91267c.chunk.js": "/webassembly-test-app/static/js/2.db91267c.chunk.js",
+    "static/js/2.db91267c.chunk.js.map": "/webassembly-test-app/static/js/2.db91267c.chunk.js.map",
+    "static/js/3.53ac83d7.chunk.js": "/webassembly-test-app/static/js/3.53ac83d7.chunk.js",
+    "f24b9ab8a89aa4205c15.module.wasm": "/webassembly-test-app/f24b9ab8a89aa4205c15.module.wasm",
+    "static/js/3.53ac83d7.chunk.js.map": "/webassembly-test-app/static/js/3.53ac83d7.chunk.js.map",
     "index.html": "/webassembly-test-app/index.html",
-    "precache-manifest.cb3433fb8882ac5c244611aa9a68b5ca.js": "/webassembly-test-app/precache-manifest.cb3433fb8882ac5c244611aa9a68b5ca.js",
+    "precache-manifest.8e40e7ac431381951f287faa23962ba9.js": "/webassembly-test-app/precache-manifest.8e40e7ac431381951f287faa23962ba9.js",
     "service-worker.js": "/webassembly-test-app/service-worker.js",
-    "static/css/2.203341e8.chunk.css.map": "/webassembly-test-app/static/css/2.203341e8.chunk.css.map",
+    "static/css/2.26f5942a.chunk.css.map": "/webassembly-test-app/static/css/2.26f5942a.chunk.css.map",
     "static/css/main.795991f2.chunk.css.map": "/webassembly-test-app/static/css/main.795991f2.chunk.css.map",
     "static/media/semantic.min.css": "/webassembly-test-app/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.bf12d54f.js",
-    "static/css/2.203341e8.chunk.css",
-    "static/js/2.101a365d.chunk.js",
+    "static/js/runtime-main.a7e6047f.js",
+    "static/css/2.26f5942a.chunk.css",
+    "static/js/2.db91267c.chunk.js",
     "static/css/main.795991f2.chunk.css",
-    "static/js/main.1cf57479.chunk.js"
+    "static/js/main.1721600d.chunk.js"
   ]
 }
