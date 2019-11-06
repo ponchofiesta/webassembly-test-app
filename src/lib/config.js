@@ -192,8 +192,8 @@ const config = {
             parameters: [],
             externalData: {
                 type: "bytes",
-                path: "data/random100.bin",
-                repeat: 1
+                path: "data/random1K.bin",
+                repeat: 1000
             },
             repeat: 20,
             chart: areaChartOptions,
