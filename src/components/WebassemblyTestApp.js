@@ -40,7 +40,6 @@ class WebassemblyTestApp extends Component {
                 <HashRouter>
                     <Switch>
                         <Route path='/' render={() => <BenchmarksPage benchmarksets={config.benchmarksets}/>}/>
-                        <Route path='/test/:id' component={Benchmark}/>
                     </Switch>
                 </HashRouter>
             </main>
